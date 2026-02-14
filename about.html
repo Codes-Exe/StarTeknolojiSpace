@@ -638,22 +638,59 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Star Technology Space Terminal</title>
+  <title>Star Command Terminal</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; padding: 0; }
     
-    @keyframes scanline {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100vh); }
+    .terminal-bg {
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 255, 157, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 200, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(138, 43, 226, 0.05) 0%, transparent 70%),
+        linear-gradient(180deg, #0a0a0f 0%, #0d1117 50%, #0a0a0f 100%);
     }
     
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), inset 0 0 60px rgba(0, 255, 136, 0.1); }
-      50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.5), inset 0 0 80px rgba(0, 255, 136, 0.2); }
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 157, 0.015) 2px,
+        rgba(0, 255, 157, 0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+    
+    .glow-text {
+      text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 40px currentColor;
+    }
+    
+    .terminal-border {
+      border: 1px solid rgba(0, 255, 157, 0.3);
+      box-shadow: 
+        0 0 20px rgba(0, 255, 157, 0.1),
+        inset 0 0 60px rgba(0, 0, 0, 0.5);
+    }
+    
+    .command-input {
+      background: rgba(0, 255, 157, 0.05);
+      border: 1px solid rgba(0, 255, 157, 0.2);
+      caret-color: #00ff9d;
+    }
+    
+    .command-input:focus {
+      outline: none;
+      border-color: rgba(0, 255, 157, 0.5);
+      box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
     }
     
     @keyframes blink {
@@ -661,9 +698,26 @@
       51%, 100% { opacity: 0; }
     }
     
+    .cursor-blink {
+      animation: blink 1s infinite;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    .float-anim {
+      animation: float 3s ease-in-out infinite;
     }
     
     @keyframes typing {
@@ -671,689 +725,166 @@
       to { width: 100%; }
     }
     
-    .scanline {
-      position: absolute;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.4), transparent);
-      animation: scanline 3s linear infinite;
-      pointer-events: none;
-      z-index: 10;
-    }
-    
-    .terminal-glow {
-      animation: pulse-glow 2s ease-in-out infinite;
-    }
-    
-    .cursor-blink {
-      animation: blink 1s step-end infinite;
+    .output-line {
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 0.3s steps(40, end);
     }
     
     .star {
       position: absolute;
       background: white;
       border-radius: 50%;
-      animation: float 3s ease-in-out infinite;
+      animation: twinkle 2s ease-in-out infinite;
     }
     
-    .command-output {
-      font-family: 'JetBrains Mono', monospace;
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
     }
     
-    ::-webkit-scrollbar {
-      width: 8px;
+    .scrollbar-custom::-webkit-scrollbar {
+      width: 6px;
     }
     
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 20, 40, 0.8);
+    .scrollbar-custom::-webkit-scrollbar-track {
+      background: rgba(0, 255, 157, 0.05);
     }
     
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #00ff88, #00d4ff);
-      border-radius: 4px;
+    .scrollbar-custom::-webkit-scrollbar-thumb {
+      background: rgba(0, 255, 157, 0.3);
+      border-radius: 3px;
     }
     
-    .hologram-effect {
-      background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-      backdrop-filter: blur(10px);
+    .status-online {
+      box-shadow: 0 0 10px #00ff9d;
     }
   </style>
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full bg-gray-950 text-green-400 overflow-hidden" style="font-family: 'JetBrains Mono', monospace;"><!-- Yıldız Arkaplanı -->
-  <div id="stars-container" class="fixed inset-0 overflow-hidden pointer-events-none"></div><!-- Ana Container -->
-  <div class="h-full w-full flex flex-col relative" style="background: radial-gradient(ellipse at center, #0a1628 0%, #000510 50%, #000000 100%);"><!-- Scanline Efekti -->
-   <div class="scanline"></div><!-- Üst Bar -->
-   <header class="relative z-20 border-b border-cyan-500/30 p-3 hologram-effect">
-    <div class="flex items-center justify-between max-w-7xl mx-auto">
-     <div class="flex items-center gap-4"><!-- Logo -->
-      <div class="relative">
-       <svg width="50" height="50" viewbox="0 0 100 100" class="drop-shadow-lg" style="filter: drop-shadow(0 0 10px #00ff88);"><polygon points="50,5 61,35 95,35 68,55 79,90 50,70 21,90 32,55 5,35 39,35" fill="none" stroke="url(#starGrad)" stroke-width="3" /> <circle cx="50" cy="50" r="15" fill="none" stroke="#00d4ff" stroke-width="2" /> <circle cx="50" cy="50" r="8" fill="#00ff88" /> <defs>
-         <lineargradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#00ff88" />
-          <stop offset="100%" style="stop-color:#00d4ff" />
-         </lineargradient>
-        </defs>
-       </svg>
-      </div>
-      <div>
-       <h1 id="terminal-title" class="text-xl font-bold tracking-wider" style="font-family: 'Orbitron', sans-serif; background: linear-gradient(90deg, #00ff88, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">STAR-TECH COMMAND CENTER</h1>
-       <p class="text-xs text-cyan-400/70">GALACTIC DOMINANCE SYSTEM v3.7.2</p>
-      </div>
-     </div><!-- Durum Göstergeleri -->
-     <div class="flex items-center gap-6">
-      <div class="flex flex-col items-center"><span class="text-xs text-cyan-400/70">SİSTEM</span>
-       <div class="flex items-center gap-1">
-        <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div><span class="text-green-400 text-sm font-bold">ONLINE</span>
-       </div>
-      </div>
-      <div class="flex flex-col items-center"><span class="text-xs text-cyan-400/70">GÜÇ</span> <span class="text-cyan-400 text-sm font-bold" id="power-level">100%</span>
-      </div>
-      <div class="flex flex-col items-center"><span class="text-xs text-cyan-400/70">BAĞLANTI</span> <span class="text-purple-400 text-sm font-bold">QUANTUM</span>
-      </div>
+ <body class="h-full m-0 p-0 overflow-hidden terminal-bg" style="font-family: 'JetBrains Mono', monospace;">
+  <div class="scanline"></div><!-- Stars Background -->
+  <div id="stars-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+  <main class="h-full w-full flex flex-col p-4 md:p-6 relative z-10"><!-- Header -->
+   <header class="flex items-center justify-between mb-4 pb-4 border-b border-emerald-500/30">
+    <div class="flex items-center gap-4">
+     <div class="float-anim">
+      <svg width="50" height="50" viewbox="0 0 50 50" class="text-emerald-400"><polygon points="25,2 32,18 50,20 37,33 40,50 25,42 10,50 13,33 0,20 18,18" fill="currentColor" class="glow-text" /> <circle cx="25" cy="25" r="8" fill="#0a0a0f" /> <circle cx="25" cy="25" r="4" fill="currentColor" class="pulse-glow" />
+      </svg>
+     </div>
+     <div>
+      <h1 id="main-title" class="text-2xl md:text-3xl font-black text-emerald-400 glow-text" style="font-family: 'Orbitron', sans-serif;">STAR COMMAND</h1>
+      <p id="subtitle" class="text-xs text-emerald-500/70">Galaktik Hakimiyet Sistemi v4.7.2</p>
      </div>
     </div>
-   </header><!-- Ana Terminal Alanı -->
-   <main class="flex-1 flex gap-4 p-4 min-h-0 relative z-10"><!-- Sol Panel - Hızlı Komutlar -->
-    <aside class="w-64 flex-shrink-0 flex flex-col gap-3"><!-- Hızlı Komut Butonları -->
-     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3 terminal-glow">
-      <h3 class="text-cyan-400 text-xs font-bold mb-3 tracking-widest" style="font-family: 'Orbitron', sans-serif;">⚡ HIZLI KOMUTLAR</h3>
-      <div class="grid grid-cols-2 gap-2"><button onclick="executeQuickCommand('scan')" class="p-2 rounded bg-gradient-to-br from-green-900/50 to-green-800/30 border border-green-500/30 hover:border-green-400 hover:shadow-lg hover:shadow-green-500/20 transition-all text-xs text-green-400 hover:text-green-300"> 🛸 TARA </button> <button onclick="executeQuickCommand('attack')" class="p-2 rounded bg-gradient-to-br from-red-900/50 to-red-800/30 border border-red-500/30 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/20 transition-all text-xs text-red-400 hover:text-red-300"> ⚔️ SALDIRI </button> <button onclick="executeQuickCommand('defend')" class="p-2 rounded bg-gradient-to-br from-blue-900/50 to-blue-800/30 border border-blue-500/30 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 transition-all text-xs text-blue-400 hover:text-blue-300"> 🛡️ SAVUN </button> <button onclick="executeQuickCommand('cloak')" class="p-2 rounded bg-gradient-to-br from-purple-900/50 to-purple-800/30 border border-purple-500/30 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 transition-all text-xs text-purple-400 hover:text-purple-300"> 👻 GİZLEN </button> <button onclick="executeQuickCommand('warp')" class="p-2 rounded bg-gradient-to-br from-cyan-900/50 to-cyan-800/30 border border-cyan-500/30 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 transition-all text-xs text-cyan-400 hover:text-cyan-300"> 🌀 WARP </button> <button onclick="executeQuickCommand('hack')" class="p-2 rounded bg-gradient-to-br from-yellow-900/50 to-yellow-800/30 border border-yellow-500/30 hover:border-yellow-400 hover:shadow-lg hover:shadow-yellow-500/20 transition-all text-xs text-yellow-400 hover:text-yellow-300"> 💻 HACK </button> <button onclick="executeQuickCommand('dominate')" class="col-span-2 p-3 rounded bg-gradient-to-br from-pink-900/50 to-purple-800/30 border border-pink-500/30 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-500/30 transition-all text-sm text-pink-400 hover:text-pink-300 font-bold"> 👑 HAKİMİYET KUR </button>
-      </div>
-     </div><!-- Filo Durumu -->
-     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3 flex-1">
-      <h3 class="text-cyan-400 text-xs font-bold mb-3 tracking-widest" style="font-family: 'Orbitron', sans-serif;">🚀 FİLO DURUMU</h3>
-      <div class="space-y-2">
-       <div class="flex justify-between items-center text-xs"><span class="text-gray-400">Savaş Gemileri</span> <span class="text-green-400 font-mono">247</span>
-       </div>
-       <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
-        <div class="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full" style="width: 85%"></div>
-       </div>
-       <div class="flex justify-between items-center text-xs mt-2"><span class="text-gray-400">Keşif Botları</span> <span class="text-cyan-400 font-mono">1,892</span>
-       </div>
-       <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
-        <div class="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full" style="width: 92%"></div>
-       </div>
-       <div class="flex justify-between items-center text-xs mt-2"><span class="text-gray-400">Enerji Kalkanı</span> <span class="text-purple-400 font-mono">AKTIF</span>
-       </div>
-       <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
-        <div class="h-full bg-gradient-to-r from-purple-500 to-pink-400 rounded-full animate-pulse" style="width: 100%"></div>
-       </div>
-      </div>
+    <div class="flex items-center gap-6 text-xs">
+     <div class="hidden md:flex items-center gap-2">
+      <div class="w-2 h-2 rounded-full bg-emerald-400 status-online"></div><span class="text-emerald-400">SİSTEM AKTİF</span>
      </div>
-    </aside><!-- Merkez - Terminal -->
-    <section class="flex-1 flex flex-col min-w-0">
-     <div class="hologram-effect rounded-lg border border-green-500/30 flex-1 flex flex-col terminal-glow overflow-hidden"><!-- Terminal Başlığı -->
-      <div class="flex items-center justify-between px-4 py-2 border-b border-green-500/20 bg-black/30">
-       <div class="flex items-center gap-2">
-        <div class="w-3 h-3 rounded-full bg-red-500"></div>
-        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-        <div class="w-3 h-3 rounded-full bg-green-500"></div>
-       </div><span class="text-green-400/70 text-xs font-mono">STAR-TERMINAL :: root@galaxy-hq</span> <button onclick="clearTerminal()" class="text-xs text-gray-500 hover:text-red-400 transition-colors">TEMİZLE</button>
-      </div><!-- Terminal Çıktısı -->
-      <div id="terminal-output" class="flex-1 overflow-y-auto p-4 font-mono text-sm command-output space-y-1"><!-- Çıktılar buraya gelecek -->
-      </div><!-- Komut Girişi -->
-      <div class="border-t border-green-500/20 p-3 bg-black/40">
-       <div class="flex items-center gap-2"><span class="text-cyan-400 font-bold">root@galaxy-hq:~$</span> <input type="text" id="command-input" class="flex-1 bg-transparent border-none outline-none text-green-400 font-mono placeholder-green-700" placeholder="Komut girin... (yardım için 'help' yazın)" autocomplete="off" spellcheck="false"> <span class="text-green-400 cursor-blink">█</span>
-       </div>
-      </div>
+     <div class="text-emerald-500/70" id="datetime"></div>
+    </div>
+   </header><!-- Status Bar -->
+   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+    <div class="terminal-border rounded-lg p-3 bg-black/30">
+     <div class="text-[10px] text-emerald-500/60 mb-1">
+      ⚡ ENERJİ SEVİYESİ
      </div>
-    </section><!-- Sağ Panel - Radar & Hedefler -->
-    <aside class="w-72 flex-shrink-0 flex flex-col gap-3"><!-- Radar -->
-     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3 aspect-square relative overflow-hidden">
-      <h3 class="text-cyan-400 text-xs font-bold mb-2 tracking-widest" style="font-family: 'Orbitron', sans-serif;">📡 GALAKTIK RADAR</h3>
-      <div class="relative w-full h-48" id="radar-container">
-       <svg viewbox="0 0 200 200" class="w-full h-full"><!-- Radar Çemberleri --> <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(0, 255, 136, 0.2)" stroke-width="1" /> <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(0, 255, 136, 0.15)" stroke-width="1" /> <circle cx="100" cy="100" r="30" fill="none" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" /> <!-- Radar Çizgileri --> <line x1="100" y1="10" x2="100" y2="190" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" /> <line x1="10" y1="100" x2="190" y2="100" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" /> <!-- Merkez --> <circle cx="100" cy="100" r="5" fill="#00ff88">
-         <animate attributename="r" values="3;6;3" dur="1s" repeatcount="indefinite" />
-        </circle> <!-- Radar Sweep --> <g id="radar-sweep">
-         <line x1="100" y1="100" x2="100" y2="10" stroke="url(#sweepGrad)" stroke-width="2">
-          <animatetransform attributename="transform" type="rotate" from="0 100 100" to="360 100 100" dur="3s" repeatcount="indefinite" />
-         </line>
-         <defs>
-          <lineargradient id="sweepGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-           <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.8" />
-           <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0" />
-          </lineargradient>
-         </defs>
-        </g> <!-- Hedefler --> <g id="radar-targets"></g>
-       </svg>
-      </div>
-     </div><!-- Tespit Edilen Hedefler -->
-     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3 flex-1 overflow-hidden">
-      <h3 class="text-cyan-400 text-xs font-bold mb-2 tracking-widest" style="font-family: 'Orbitron', sans-serif;">🎯 HEDEFLER</h3>
-      <div id="target-list" class="space-y-2 overflow-y-auto max-h-48 text-xs"><!-- Hedefler buraya -->
-      </div>
-     </div><!-- Sistem Logları -->
-     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3">
-      <h3 class="text-cyan-400 text-xs font-bold mb-2 tracking-widest" style="font-family: 'Orbitron', sans-serif;">📋 SİSTEM LOGLARI</h3>
-      <div id="system-logs" class="space-y-1 text-xs font-mono max-h-24 overflow-y-auto"><!-- Loglar buraya -->
-      </div>
+     <div class="text-lg text-emerald-400 font-bold" id="energy-level">
+      100%
      </div>
-    </aside>
-   </main><!-- Alt Bar -->
-   <footer class="relative z-20 border-t border-cyan-500/30 px-4 py-2 hologram-effect">
-    <div class="flex items-center justify-between text-xs">
-     <div class="flex items-center gap-4"><span class="text-gray-500">SEKTÖR: <span class="text-cyan-400">ALPHA-7</span></span> <span class="text-gray-500">KOORDİNAT: <span class="text-green-400" id="coordinates">X:247.3 Y:891.2 Z:42.8</span></span>
-     </div>
-     <div class="flex items-center gap-4"><span class="text-gray-500">STAR-TIME: <span class="text-purple-400" id="star-time">--:--:--</span></span> <span id="welcome-message" class="text-cyan-400/70">Uzay Hakimiyet Sistemine Hoşgeldiniz</span>
+     <div class="w-full h-1 bg-emerald-900/50 rounded mt-1">
+      <div id="energy-bar" class="h-full bg-emerald-400 rounded transition-all duration-500" style="width: 100%"></div>
      </div>
     </div>
-   </footer>
-  </div>
+    <div class="terminal-border rounded-lg p-3 bg-black/30">
+     <div class="text-[10px] text-emerald-500/60 mb-1">
+      🛡️ KALKAN GÜCÜ
+     </div>
+     <div class="text-lg text-cyan-400 font-bold" id="shield-level">
+      100%
+     </div>
+     <div class="w-full h-1 bg-cyan-900/50 rounded mt-1">
+      <div id="shield-bar" class="h-full bg-cyan-400 rounded transition-all duration-500" style="width: 100%"></div>
+     </div>
+    </div>
+    <div class="terminal-border rounded-lg p-3 bg-black/30">
+     <div class="text-[10px] text-emerald-500/60 mb-1">
+      🎯 FETHEDİLEN
+     </div>
+     <div class="text-lg text-purple-400 font-bold" id="conquered-count">
+      0
+     </div>
+     <div class="text-[10px] text-emerald-500/50">
+      gezegen
+     </div>
+    </div>
+    <div class="terminal-border rounded-lg p-3 bg-black/30">
+     <div class="text-[10px] text-emerald-500/60 mb-1">
+      🚀 FİLO DURUMU
+     </div>
+     <div class="text-lg text-amber-400 font-bold" id="fleet-status">
+      HAZIR
+     </div>
+     <div class="text-[10px] text-emerald-500/50" id="ship-count">
+      1000 gemi
+     </div>
+    </div>
+   </div><!-- Terminal Output -->
+   <div class="flex-1 terminal-border rounded-xl bg-black/40 flex flex-col overflow-hidden min-h-0">
+    <div class="flex items-center gap-2 px-4 py-2 border-b border-emerald-500/20 bg-emerald-500/5">
+     <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+     <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+     <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div><span class="text-xs text-emerald-500/50 ml-2">terminal@star-command:~</span>
+    </div>
+    <div id="terminal-output" class="flex-1 overflow-y-auto p-4 scrollbar-custom text-sm space-y-1 min-h-0"><!-- Output will be rendered here -->
+    </div><!-- Command Input -->
+    <div class="p-4 border-t border-emerald-500/20 bg-black/30">
+     <div class="flex items-center gap-2"><span class="text-emerald-400 font-bold">❯</span> <label for="command-input" class="sr-only">Komut girin</label> <input type="text" id="command-input" class="flex-1 bg-transparent text-emerald-300 command-input rounded px-3 py-2 text-sm" placeholder="Komut girin... (yardım için 'help' yazın)" autocomplete="off" spellcheck="false"> <button id="execute-btn" class="px-4 py-2 bg-emerald-500/20 border border-emerald-500/40 rounded text-emerald-400 hover:bg-emerald-500/30 transition-all text-sm"> ÇALIŞTIR </button>
+     </div>
+    </div>
+   </div><!-- Quick Commands -->
+   <div class="mt-4 flex flex-wrap gap-2"><button class="quick-cmd px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded text-emerald-400 text-xs hover:bg-emerald-500/20 transition-all" data-cmd="scan"> 🔍 TARA </button> <button class="quick-cmd px-3 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded text-cyan-400 text-xs hover:bg-cyan-500/20 transition-all" data-cmd="status"> 📊 DURUM </button> <button class="quick-cmd px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 rounded text-purple-400 text-xs hover:bg-purple-500/20 transition-all" data-cmd="conquer"> ⚔️ FETHİ </button> <button class="quick-cmd px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded text-amber-400 text-xs hover:bg-amber-500/20 transition-all" data-cmd="fleet"> 🚀 FİLO </button> <button class="quick-cmd px-3 py-1.5 bg-red-500/10 border border-red-500/30 rounded text-red-400 text-xs hover:bg-red-500/20 transition-all" data-cmd="attack"> 💥 SALDIRI </button> <button class="quick-cmd px-3 py-1.5 bg-pink-500/10 border border-pink-500/30 rounded text-pink-400 text-xs hover:bg-pink-500/20 transition-all" data-cmd="hyperjump"> 🌀 IŞIK HIZI </button> <button class="quick-cmd px-3 py-1.5 bg-teal-500/10 border border-teal-500/30 rounded text-teal-400 text-xs hover:bg-teal-500/20 transition-all" data-cmd="shield"> 🛡️ KALKAN </button> <button class="quick-cmd px-3 py-1.5 bg-orange-500/10 border border-orange-500/30 rounded text-orange-400 text-xs hover:bg-orange-500/20 transition-all" data-cmd="help"> ❓ YARDIM </button>
+   </div>
+  </main>
   <script>
-    // Default Config
     const defaultConfig = {
-      terminal_title: 'STAR-TECH COMMAND CENTER',
-      welcome_message: 'Uzay Hakimiyet Sistemine Hoşgeldiniz',
-      primary_color: '#00ff88',
-      secondary_color: '#00d4ff',
-      background_color: '#000510',
-      text_color: '#00ff88',
-      accent_color: '#ff00aa',
-      font_family: 'JetBrains Mono'
+      terminal_title: 'STAR COMMAND',
+      welcome_message: 'Galaktik Hakimiyet Sistemi v4.7.2',
+      primary_color: '#00ff9d',
+      secondary_color: '#0a0a0f',
+      text_color: '#00ff9d',
+      accent_color: '#00c8ff',
+      highlight_color: '#8b5cf6',
+      font_family: 'JetBrains Mono',
+      font_size: 14
     };
-
+    
     let config = { ...defaultConfig };
-
-    // Element SDK Initialization
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (newConfig) => {
-          config = { ...defaultConfig, ...newConfig };
-          applyConfig();
-        },
-        mapToCapabilities: (cfg) => ({
-          recolorables: [
-            {
-              get: () => cfg.background_color || defaultConfig.background_color,
-              set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
-            },
-            {
-              get: () => cfg.secondary_color || defaultConfig.secondary_color,
-              set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
-            },
-            {
-              get: () => cfg.text_color || defaultConfig.text_color,
-              set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
-            },
-            {
-              get: () => cfg.primary_color || defaultConfig.primary_color,
-              set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
-            },
-            {
-              get: () => cfg.accent_color || defaultConfig.accent_color,
-              set: (v) => { cfg.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
-            }
-          ],
-          borderables: [],
-          fontEditable: {
-            get: () => cfg.font_family || defaultConfig.font_family,
-            set: (v) => { cfg.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
-          },
-          fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (cfg) => new Map([
-          ['terminal_title', cfg.terminal_title || defaultConfig.terminal_title],
-          ['welcome_message', cfg.welcome_message || defaultConfig.welcome_message]
-        ])
-      });
-    }
-
-    function applyConfig() {
-      const titleEl = document.getElementById('terminal-title');
-      const welcomeEl = document.getElementById('welcome-message');
-      
-      if (titleEl) titleEl.textContent = config.terminal_title || defaultConfig.terminal_title;
-      if (welcomeEl) welcomeEl.textContent = config.welcome_message || defaultConfig.welcome_message;
-      
-      document.body.style.fontFamily = `${config.font_family || defaultConfig.font_family}, monospace`;
-    }
-
-    // Komut Sistemi
-    const commands = {
-      help: () => ({
-        type: 'info',
-        content: `
-╔══════════════════════════════════════════════════════════════╗
-║                    STAR-TECH KOMUT REHBERİ                    ║
-╠══════════════════════════════════════════════════════════════╣
-║  scan [hedef]      - Galaktik tarama başlat                  ║
-║  attack [hedef]    - Saldırı emri ver                        ║
-║  defend            - Savunma sistemlerini aktifle            ║
-║  cloak             - Gizlenme modunu aç/kapat                ║
-║  warp [koordinat]  - Warp sıçraması yap                      ║
-║  hack [sistem]     - Hedef sistemi hackle                    ║
-║  dominate          - Tam hakimiyet protokolü                 ║
-║  status            - Gemi durumunu göster                    ║
-║  fleet             - Filo bilgilerini listele                ║
-║  map               - Galaktik haritayı göster                ║
-║  resources         - Kaynak durumunu kontrol et              ║
-║  upgrade [sistem]  - Sistem yükseltmesi yap                  ║
-║  mission           - Aktif görevleri listele                 ║
-║  clear             - Terminal ekranını temizle               ║
-║  matrix            - Matrix modunu aktifle                   ║
-║  quantum           - Quantum hesaplama başlat                ║
-╚══════════════════════════════════════════════════════════════╝`
-      }),
-      
-      scan: (args) => {
-        const target = args[0] || 'tüm sektör';
-        addRadarTarget();
-        return {
-          type: 'success',
-          content: `
-🛸 TARAMA BAŞLATILDI
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Hedef: ${target.toUpperCase()}
-Tarama yarıçapı: 500 ışık yılı
-Algılanan anomaliler: ${Math.floor(Math.random() * 10) + 1}
-Tespit edilen gemiler: ${Math.floor(Math.random() * 50) + 5}
-Potansiyel tehditler: ${Math.floor(Math.random() * 5)}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✓ Tarama tamamlandı. Radar güncellendi.`
-        };
-      },
-      
-      attack: (args) => {
-        const target = args[0] || 'belirsiz hedef';
-        addSystemLog('⚔️ Saldırı emri verildi', 'danger');
-        return {
-          type: 'danger',
-          content: `
-⚔️ SALDIRI PROTOKOLÜ AKTİF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Hedef: ${target.toUpperCase()}
-Silah sistemleri: ONLINE
-Lazer bataryaları: ŞARJ EDİLİYOR
-Füze yuvaları: HAZIR
-Kalkan delici: AKTİF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎯 Ateş etmeye hazır! 'fire' ile onaylayın.`
-        };
-      },
-      
-      defend: () => {
-        addSystemLog('🛡️ Savunma kalkanları aktif', 'info');
-        return {
-          type: 'info',
-          content: `
-🛡️ SAVUNMA SİSTEMLERİ AKTİFLEŞTİRİLDİ
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Enerji kalkanı: ████████████ 100%
-Nokta savunma: ONLINE
-ECM sistemleri: AKTİF
-Otomatik müdahale: AÇIK
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✓ Gemi tam savunma modunda.`
-        };
-      },
-      
-      cloak: () => {
-        addSystemLog('👻 Gizlenme modu değiştirildi', 'warning');
-        return {
-          type: 'warning',
-          content: `
-👻 GİZLENME MODU
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Durum: AKTİFLEŞTİRİLİYOR...
-Görünmezlik alanı: GENİŞLETİLİYOR
-Termal imza: MASKELEME
-EM yayılımı: BASTIRILIYOR
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✓ Gemi artık radardan görünmüyor!`
-        };
-      },
-      
-      warp: (args) => {
-        const coord = args[0] || 'rastgele';
-        updateCoordinates();
-        addSystemLog('🌀 Warp sıçraması tamamlandı', 'success');
-        return {
-          type: 'success',
-          content: `
-🌀 WARP SIÇRAMASI
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Hedef koordinat: ${coord.toUpperCase()}
-Warp motoru: ŞARJ EDİLİYOR...
-████████████ 100%
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✓ SIÇRAMA BAŞARILI!
-Yeni konum: SEKTÖR-${String.fromCharCode(65 + Math.floor(Math.random() * 26))}-${Math.floor(Math.random() * 99)}`
-        };
-      },
-      
-      hack: (args) => {
-        const system = args[0] || 'hedef sistem';
-        addSystemLog('💻 Hack girişimi başladı', 'warning');
-        return {
-          type: 'warning',
-          content: `
-💻 HACKING PROTOKOLÜ
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Hedef: ${system.toUpperCase()}
-Bağlantı kuruluyor... ✓
-Güvenlik duvarı atlanıyor... ✓
-Şifre kırılıyor... ████████░░ 80%
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ ERİŞİM SAĞLANDI!
-Veri indirme başladı...`
-        };
-      },
-      
-      dominate: () => {
-        addSystemLog('👑 HAKİMİYET PROTOKOLÜ AKTİF!', 'danger');
-        return {
-          type: 'special',
-          content: `
-👑 ████████████████████████████████████████████ 👑
-██                                            ██
-██      G A L A K T İ K   H A K İ M İ Y E T   ██
-██          P R O T O K O L Ü   A K T İ F     ██
-██                                            ██
-👑 ████████████████████████████████████████████ 👑
-
-   🌟 TÜM SİSTEMLER MAKSİMUM GÜÇTE 🌟
-   
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   ⚡ Silahlar         : OVERCHARGE
-   🛡️ Kalkanlar       : IMPENETRABLE
-   🚀 Motorlar         : SUPERLUMINAL
-   💻 AI               : UNLIMITED
-   👁️ Sensörler       : OMNISCIENT
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   
-   ⚠️ DİKKAT: Yıldız sistemleri kontrol altına
-   alınıyor. Tüm düşman filoları teslim olmak
-   zorunda!
-   
-   ✓ HAKİMİYET KURULDU - EVREN SİZİN!`
-        };
-      },
-      
-      status: () => ({
-        type: 'info',
-        content: `
-📊 GEMİ DURUM RAPORU
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Gövde Bütünlüğü   : ████████░░ 85%
-Kalkan Enerjisi   : ██████████ 100%
-Yakıt Seviyesi    : ███████░░░ 72%
-Mürettebat Morali : █████████░ 95%
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Aktif Sistemler: 47/50
-Kritik Uyarılar: 0
-Son Bakım: 3 yıldız-günü önce`
-      }),
-      
-      fleet: () => ({
-        type: 'info',
-        content: `
-🚀 FİLO ENVANTERİ
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SAVAŞ GEMİLERİ
-├─ Dreadnought     : 3
-├─ Kruvazör        : 18
-├─ Destroyer       : 45
-└─ Fırkateyn       : 181
-
-DESTEK GEMİLERİ
-├─ Taşıyıcı        : 12
-├─ Tanker          : 24
-└─ Hastane Gemisi  : 6
-
-KEŞİF ARAÇLARI
-├─ Probe           : 1,892
-└─ Stealth Scout   : 87
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Toplam: 2,268 birim`
-      }),
-      
-      matrix: () => {
-        startMatrixEffect();
-        return {
-          type: 'success',
-          content: `
-💊 MATRİX MODU AKTİF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-"Free your mind..."
-Simülasyon katmanı aşılıyor...
-Gerçeklik algısı yeniden yapılandırılıyor...
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✓ Artık gerçeği görebilirsiniz.`
-        };
-      },
-      
-      quantum: () => ({
-        type: 'special',
-        content: `
-⚛️ QUANTUM HESAPLAMA BAŞLATILDI
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Qubit sayısı: 4,096
-Süperpozisyon: STABIL
-Dolanıklık: AKTİF
-Dekoherans süresi: 847μs
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🔮 Tüm olasılıklar eşzamanlı hesaplanıyor...
-Sonuç: SONSUZ POTANSİYEL`
-      }),
-      
-      resources: () => ({
-        type: 'info',
-        content: `
-💎 KAYNAK DURUMU
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Enerji Kristali  : 12,847 ton
-Titanium Alaşım  : 8,234 ton
-Quantum Yakıt    : 3,421 litre
-Nadir Element    : 847 kg
-Karanlık Madde   : 12.3 μg
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Toplam Değer: 2.4 Trilyon Kredi`
-      }),
-      
-      mission: () => ({
-        type: 'warning',
-        content: `
-📋 AKTİF GÖREVLER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[!] ÖNCELİKLİ: Andromeda Kapısını Koru
-    İlerleme: ██████░░░░ 60%
     
-[2] Keşif: Nebula-X Haritalaması
-    İlerleme: ████████░░ 82%
-    
-[3] Diplomatik: Zortan Konseyi Görüşmesi
-    Kalan Süre: 4 yıldız-saati
-    
-[4] Kaynak: Asteroid Madenciliği
-    İlerleme: █████░░░░░ 45%
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
-      }),
-      
-      map: () => ({
-        type: 'info',
-        content: `
-🗺️ GALAKTİK HARİTA - SEKTÖR ALPHA-7
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     *        ·    ★    ·        *
-        ·   NEBULA-X    *    ·
-   *      ·    *    ·       ★
-      ·       [SİZ]      ·
-   ★     *   ·    *   ·      *
-        DÜŞMAN      ·    ★
-     ·    ÜSSÜ   ★      ·    *
-   *    ·     *     ·        ★
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Lejant: [SİZ]=Konum *=Yıldız ★=İstasyon`
-      }),
-      
-      clear: () => {
-        setTimeout(() => {
-          document.getElementById('terminal-output').innerHTML = '';
-          addOutput('Terminal temizlendi. Yeni komut girmeye hazır.', 'info');
-        }, 100);
-        return null;
-      }
+    // Game State
+    let gameState = {
+      energy: 100,
+      shield: 100,
+      conquered: 0,
+      ships: 1000,
+      credits: 50000,
+      discoveries: [],
+      currentSector: 'Alpha-7',
+      enemies: 0,
+      commandHistory: [],
+      historyIndex: -1
     };
-
-    // Terminal İşlevleri
-    const terminalOutput = document.getElementById('terminal-output');
-    const commandInput = document.getElementById('command-input');
-    let commandHistory = [];
-    let historyIndex = -1;
-
-    function addOutput(content, type = 'normal') {
-      const div = document.createElement('div');
-      div.className = 'whitespace-pre-wrap mb-2';
-      
-      const colors = {
-        normal: 'text-green-400',
-        success: 'text-emerald-400',
-        danger: 'text-red-400',
-        warning: 'text-yellow-400',
-        info: 'text-cyan-400',
-        special: 'text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400'
-      };
-      
-      div.className += ` ${colors[type] || colors.normal}`;
-      div.textContent = content;
-      terminalOutput.appendChild(div);
-      terminalOutput.scrollTop = terminalOutput.scrollHeight;
-    }
-
-    function processCommand(input) {
-      const parts = input.trim().toLowerCase().split(/\s+/);
-      const cmd = parts[0];
-      const args = parts.slice(1);
-      
-      // Komutu geçmişe ekle
-      if (input.trim()) {
-        commandHistory.unshift(input.trim());
-        if (commandHistory.length > 50) commandHistory.pop();
-        historyIndex = -1;
-      }
-      
-      // Komutu göster
-      addOutput(`root@galaxy-hq:~$ ${input}`, 'normal');
-      
-      if (cmd === '') return;
-      
-      if (commands[cmd]) {
-        const result = commands[cmd](args);
-        if (result) {
-          addOutput(result.content, result.type);
-        }
-      } else {
-        addOutput(`Bilinmeyen komut: '${cmd}'. Yardım için 'help' yazın.`, 'danger');
-      }
-    }
-
-    function executeQuickCommand(cmd) {
-      commandInput.value = cmd;
-      processCommand(cmd);
-      commandInput.value = '';
-      commandInput.focus();
-    }
-
-    function clearTerminal() {
-      terminalOutput.innerHTML = '';
-      addOutput('Terminal temizlendi.', 'info');
-    }
-
-    // Olay Dinleyicileri
-    commandInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        processCommand(commandInput.value);
-        commandInput.value = '';
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (historyIndex < commandHistory.length - 1) {
-          historyIndex++;
-          commandInput.value = commandHistory[historyIndex];
-        }
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (historyIndex > 0) {
-          historyIndex--;
-          commandInput.value = commandHistory[historyIndex];
-        } else if (historyIndex === 0) {
-          historyIndex = -1;
-          commandInput.value = '';
-        }
-      }
-    });
-
-    // Radar Hedefleri
-    let radarTargets = [];
     
-    function addRadarTarget() {
-      const svg = document.querySelector('#radar-targets');
-      const x = 20 + Math.random() * 160;
-      const y = 20 + Math.random() * 160;
-      const isHostile = Math.random() > 0.5;
-      
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      circle.setAttribute('cx', x);
-      circle.setAttribute('cy', y);
-      circle.setAttribute('r', '4');
-      circle.setAttribute('fill', isHostile ? '#ff4444' : '#00ff88');
-      circle.innerHTML = `<animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/>`;
-      
-      svg.appendChild(circle);
-      
-      // Hedef listesine ekle
-      const targetList = document.getElementById('target-list');
-      const targetDiv = document.createElement('div');
-      targetDiv.className = `p-2 rounded ${isHostile ? 'bg-red-900/30 border border-red-500/30' : 'bg-green-900/30 border border-green-500/30'}`;
-      targetDiv.innerHTML = `
-        <div class="flex items-center justify-between">
-          <span class="${isHostile ? 'text-red-400' : 'text-green-400'}">${isHostile ? '⚠️ DÜŞMAN' : '✓ DOST'}</span>
-          <span class="text-gray-500">${Math.floor(Math.random() * 500)}AU</span>
-        </div>
-        <div class="text-gray-400 text-xs mt-1">ID: ${Math.random().toString(36).substr(2, 8).toUpperCase()}</div>
-      `;
-      targetList.prepend(targetDiv);
-      
-      // Max 8 hedef göster
-      while (targetList.children.length > 8) {
-        targetList.lastChild.remove();
-      }
-    }
-
-    // Sistem Logları
-    function addSystemLog(message, type = 'info') {
-      const logsContainer = document.getElementById('system-logs');
-      const time = new Date().toLocaleTimeString('tr-TR');
-      
-      const colors = {
-        info: 'text-cyan-400',
-        success: 'text-green-400',
-        warning: 'text-yellow-400',
-        danger: 'text-red-400'
-      };
-      
-      const logDiv = document.createElement('div');
-      logDiv.className = `${colors[type]} opacity-80`;
-      logDiv.textContent = `[${time}] ${message}`;
-      logsContainer.prepend(logDiv);
-      
-      while (logsContainer.children.length > 10) {
-        logsContainer.lastChild.remove();
-      }
-    }
-
-    // Koordinat Güncelleme
-    function updateCoordinates() {
-      const coordEl = document.getElementById('coordinates');
-      const x = (Math.random() * 999).toFixed(1);
-      const y = (Math.random() * 999).toFixed(1);
-      const z = (Math.random() * 99).toFixed(1);
-      coordEl.textContent = `X:${x} Y:${y} Z:${z}`;
-    }
-
-    // Yıldız Arkaplanı
+    const planets = [
+      'Proxima-B', 'Kepler-442b', 'Trappist-1e', 'Gliese-667c', 'HD-40307g',
+      'Wolf-1061c', 'Ross-128b', 'LHS-1140b', 'Teegarden-b', 'GJ-357d',
+      'K2-18b', 'TOI-700d', 'Kepler-62f', 'Kepler-186f', 'Epsilon-Eridani-b',
+      'Tau-Ceti-e', 'Kapteyn-b', 'GJ-273b', 'YZ-Ceti-d', 'OGLE-2016-BLG-1195Lb'
+    ];
+    
+    const sectors = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa'];
+    
     function createStars() {
       const container = document.getElementById('stars-container');
       for (let i = 0; i < 100; i++) {
@@ -1363,100 +894,843 @@ Lejant: [SİZ]=Konum *=Yıldız ★=İstasyon`
         star.style.top = Math.random() * 100 + '%';
         star.style.width = Math.random() * 2 + 1 + 'px';
         star.style.height = star.style.width;
-        star.style.animationDelay = Math.random() * 3 + 's';
-        star.style.opacity = Math.random() * 0.8 + 0.2;
+        star.style.animationDelay = Math.random() * 2 + 's';
         container.appendChild(star);
       }
     }
-
-    // Matrix Efekti
-    function startMatrixEffect() {
-      const output = document.getElementById('terminal-output');
-      const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
-      let count = 0;
-      
-      const interval = setInterval(() => {
-        let line = '';
-        for (let i = 0; i < 60; i++) {
-          line += chars[Math.floor(Math.random() * chars.length)];
-        }
-        addOutput(line, 'success');
-        count++;
-        if (count > 15) {
-          clearInterval(interval);
-        }
-      }, 100);
-    }
-
-    // Saat Güncelleme
-    function updateStarTime() {
-      const timeEl = document.getElementById('star-time');
+    
+    function updateDateTime() {
       const now = new Date();
-      const starHours = (now.getHours() * 1.5) % 24;
-      const starMinutes = (now.getMinutes() * 1.2) % 60;
-      const starSeconds = (now.getSeconds() * 1.8) % 60;
-      timeEl.textContent = `${String(Math.floor(starHours)).padStart(2, '0')}:${String(Math.floor(starMinutes)).padStart(2, '0')}:${String(Math.floor(starSeconds)).padStart(2, '0')}`;
+      const year = 3024;
+      document.getElementById('datetime').textContent = 
+        `YILDIZ TARİHİ: ${year}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')} | ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
     }
-
-    // Başlangıç
-    function init() {
-      createStars();
-      applyConfig();
+    
+    function updateStatusBars() {
+      document.getElementById('energy-level').textContent = gameState.energy + '%';
+      document.getElementById('energy-bar').style.width = gameState.energy + '%';
+      document.getElementById('shield-level').textContent = gameState.shield + '%';
+      document.getElementById('shield-bar').style.width = gameState.shield + '%';
+      document.getElementById('conquered-count').textContent = gameState.conquered;
+      document.getElementById('ship-count').textContent = gameState.ships + ' gemi';
       
-      // Karşılama mesajları
-      addOutput(`
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║   ███████╗████████╗ █████╗ ██████╗ ████████╗███████╗ ██████╗██╗  ██╗   ║
-║   ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔════╝██║  ██║   ║
-║   ███████╗   ██║   ███████║██████╔╝   ██║   █████╗  ██║     ███████║   ║
-║   ╚════██║   ██║   ██╔══██║██╔══██╗   ██║   ██╔══╝  ██║     ██╔══██║   ║
-║   ███████║   ██║   ██║  ██║██║  ██║   ██║   ███████╗╚██████╗██║  ██║   ║
-║   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝   ║
-║                                                              ║
-║              🌟 SPACE COMMAND TERMINAL v3.7.2 🌟             ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝`, 'special');
-      
-      addOutput(`
-🚀 Sistem başlatılıyor...
-✓ Quantum çekirdek aktif
-✓ Silah sistemleri online
-✓ Kalkan jeneratörleri hazır
-✓ Warp motoru beklemede
-✓ AI asistanı yüklendi
-
-Yardım için 'help' yazın veya hızlı komut butonlarını kullanın.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`, 'success');
-      
-      // Başlangıç hedefleri
-      for (let i = 0; i < 3; i++) {
-        setTimeout(() => addRadarTarget(), i * 500);
+      if (gameState.ships < 100) {
+        document.getElementById('fleet-status').textContent = 'KRİTİK';
+        document.getElementById('fleet-status').className = 'text-lg text-red-400 font-bold';
+      } else if (gameState.ships < 500) {
+        document.getElementById('fleet-status').textContent = 'DÜŞÜK';
+        document.getElementById('fleet-status').className = 'text-lg text-amber-400 font-bold';
+      } else {
+        document.getElementById('fleet-status').textContent = 'HAZIR';
+        document.getElementById('fleet-status').className = 'text-lg text-emerald-400 font-bold';
       }
-      
-      // Sistem logları
-      addSystemLog('🚀 Sistem başlatıldı', 'success');
-      addSystemLog('🛡️ Kalkanlar aktif', 'info');
-      addSystemLog('📡 Radar taraması başladı', 'info');
-      
-      // Periyodik güncellemeler
-      setInterval(updateStarTime, 1000);
-      setInterval(() => {
-        if (Math.random() > 0.7) {
-          addRadarTarget();
-        }
-      }, 5000);
-      
-      commandInput.focus();
     }
-
-    init();
+    
+    function addOutput(text, type = 'normal') {
+      const output = document.getElementById('terminal-output');
+      const line = document.createElement('div');
+      line.className = 'output-line';
+      
+      const colors = {
+        normal: 'text-emerald-300',
+        success: 'text-emerald-400',
+        error: 'text-red-400',
+        warning: 'text-amber-400',
+        info: 'text-cyan-400',
+        special: 'text-purple-400',
+        system: 'text-emerald-500/70'
+      };
+      
+      line.className += ' ' + (colors[type] || colors.normal);
+      line.textContent = text;
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+    }
+    
+    function addMultiOutput(lines, delay = 100) {
+      lines.forEach((item, index) => {
+        setTimeout(() => {
+          if (typeof item === 'string') {
+            addOutput(item);
+          } else {
+            addOutput(item.text, item.type);
+          }
+        }, index * delay);
+      });
+    }
+    
+    const commands = {
+      help: () => {
+        addMultiOutput([
+          { text: '═══════════════════════════════════════════════════════', type: 'info' },
+          { text: '              📖 STAR COMMAND - KOMUT REHBERİ', type: 'special' },
+          { text: '═══════════════════════════════════════════════════════', type: 'info' },
+          '',
+          { text: '🔍 KEŞIF KOMUTLARI:', type: 'warning' },
+          '   scan          - Yakın sektörleri tara',
+          '   explore       - Yeni bölgeleri keşfet',
+          '   map           - Galaktik haritayı görüntüle',
+          '',
+          { text: '⚔️ SAVAŞ KOMUTLARI:', type: 'error' },
+          '   attack        - Düşmana saldır',
+          '   defend        - Savunma pozisyonu al',
+          '   conquer       - Gezegen fethet',
+          '   nuke          - Nükleer saldırı başlat',
+          '',
+          { text: '🚀 FİLO KOMUTLARI:', type: 'success' },
+          '   fleet         - Filo durumunu görüntüle',
+          '   build [n]     - n adet gemi inşa et',
+          '   repair        - Filoyu onar',
+          '   hyperjump     - Işık hızı sıçraması',
+          '',
+          { text: '🛡️ SİSTEM KOMUTLARI:', type: 'info' },
+          '   status        - Genel durum raporu',
+          '   shield        - Kalkan kontrolü',
+          '   charge        - Enerji şarj et',
+          '   upgrade       - Sistemleri yükselt',
+          '',
+          { text: '💰 EKONOMİ KOMUTLARI:', type: 'special' },
+          '   credits       - Kredi bakiyesini gör',
+          '   mine          - Kaynak madenciliği',
+          '   trade         - Ticaret yap',
+          '',
+          { text: '🎮 DİĞER KOMUTLAR:', type: 'system' },
+          '   clear         - Terminali temizle',
+          '   hack          - Düşman sistemini hackle',
+          '   broadcast     - Mesaj yayınla',
+          '   selfdestruct  - Acil imha (DİKKAT!)',
+          '',
+          { text: '═══════════════════════════════════════════════════════', type: 'info' }
+        ], 30);
+      },
+      
+      scan: () => {
+        if (gameState.energy < 10) {
+          addOutput('⚠️ HATA: Yetersiz enerji! Tarama için en az %10 enerji gerekli.', 'error');
+          return;
+        }
+        gameState.energy -= 10;
+        updateStatusBars();
+        
+        addOutput('🔍 Tarama başlatılıyor...', 'info');
+        
+        setTimeout(() => {
+          const foundPlanets = Math.floor(Math.random() * 3) + 1;
+          const foundEnemies = Math.floor(Math.random() * 5);
+          gameState.enemies = foundEnemies;
+          
+          addMultiOutput([
+            { text: '━━━━━━━━━━━━ TARAMA SONUÇLARI ━━━━━━━━━━━━', type: 'info' },
+            { text: `📍 Mevcut Sektör: ${gameState.currentSector}`, type: 'normal' },
+            { text: `🌍 Tespit Edilen Gezegen: ${foundPlanets}`, type: 'success' },
+            foundEnemies > 0 
+              ? { text: `⚠️ Düşman Gemisi Tespit: ${foundEnemies}`, type: 'error' }
+              : { text: '✅ Tehdit tespit edilmedi', type: 'success' },
+            { text: `💎 Kaynak Noktası: ${Math.random() > 0.5 ? 'BULUNDU' : 'BULUNAMADI'}`, type: 'special' },
+            { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'info' }
+          ], 150);
+        }, 1000);
+      },
+      
+      status: () => {
+        addMultiOutput([
+          { text: '╔════════════════════════════════════════════════════════╗', type: 'info' },
+          { text: '║            🌟 STAR COMMAND DURUM RAPORU 🌟             ║', type: 'special' },
+          { text: '╠════════════════════════════════════════════════════════╣', type: 'info' },
+          { text: `║  ⚡ Enerji Seviyesi    : ${String(gameState.energy).padStart(3)}%                        ║`, type: gameState.energy > 50 ? 'success' : 'warning' },
+          { text: `║  🛡️ Kalkan Gücü        : ${String(gameState.shield).padStart(3)}%                        ║`, type: gameState.shield > 50 ? 'success' : 'warning' },
+          { text: `║  🚀 Aktif Gemi Sayısı  : ${String(gameState.ships).padStart(4)}                        ║`, type: 'normal' },
+          { text: `║  💰 Kredi Bakiyesi     : ${String(gameState.credits).padStart(6)}                      ║`, type: 'special' },
+          { text: `║  🎯 Fethedilen Gezegen : ${String(gameState.conquered).padStart(3)}                         ║`, type: 'success' },
+          { text: `║  📍 Mevcut Sektör      : ${gameState.currentSector.padEnd(15)}            ║`, type: 'info' },
+          { text: '╚════════════════════════════════════════════════════════╝', type: 'info' }
+        ], 50);
+      },
+      
+      conquer: () => {
+        if (gameState.ships < 50) {
+          addOutput('⚠️ HATA: Fetih için en az 50 gemi gerekli!', 'error');
+          return;
+        }
+        if (gameState.energy < 20) {
+          addOutput('⚠️ HATA: Fetih operasyonu için yeterli enerji yok!', 'error');
+          return;
+        }
+        
+        const planet = planets[Math.floor(Math.random() * planets.length)];
+        const lostShips = Math.floor(Math.random() * 30) + 10;
+        
+        addOutput(`⚔️ ${planet} gezegenine fetih operasyonu başlatılıyor...`, 'warning');
+        
+        setTimeout(() => {
+          if (Math.random() > 0.3) {
+            gameState.ships -= lostShips;
+            gameState.conquered++;
+            gameState.energy -= 20;
+            gameState.credits += 5000;
+            
+            addMultiOutput([
+              { text: '═══════════════════════════════════════════', type: 'success' },
+              { text: `🎉 FETİH BAŞARILI: ${planet}`, type: 'success' },
+              { text: `   Kayıp: ${lostShips} gemi`, type: 'warning' },
+              { text: `   Kazanılan Kredi: +5000`, type: 'special' },
+              { text: `   Toplam Fetih: ${gameState.conquered} gezegen`, type: 'info' },
+              { text: '═══════════════════════════════════════════', type: 'success' }
+            ], 100);
+          } else {
+            gameState.ships -= lostShips * 2;
+            gameState.energy -= 20;
+            gameState.shield -= 20;
+            
+            addMultiOutput([
+              { text: '═══════════════════════════════════════════', type: 'error' },
+              { text: `❌ FETİH BAŞARISIZ: ${planet}`, type: 'error' },
+              { text: `   Kayıp: ${lostShips * 2} gemi`, type: 'error' },
+              { text: '   Güçlü direniş ile karşılaşıldı!', type: 'warning' },
+              { text: '═══════════════════════════════════════════', type: 'error' }
+            ], 100);
+          }
+          updateStatusBars();
+        }, 2000);
+      },
+      
+      attack: () => {
+        if (gameState.enemies === 0) {
+          addOutput('ℹ️ Hedef tespit edilmedi. Önce "scan" komutunu kullanın.', 'info');
+          return;
+        }
+        if (gameState.ships < 10) {
+          addOutput('⚠️ HATA: Saldırı için yeterli gemi yok!', 'error');
+          return;
+        }
+        
+        addOutput('💥 Saldırı başlatılıyor...', 'error');
+        
+        setTimeout(() => {
+          const destroyed = Math.min(gameState.enemies, Math.floor(Math.random() * 3) + 1);
+          const lostShips = Math.floor(Math.random() * 15) + 5;
+          gameState.enemies -= destroyed;
+          gameState.ships -= lostShips;
+          gameState.credits += destroyed * 1000;
+          
+          addMultiOutput([
+            { text: '━━━━━━━━━━━ SAVAŞ RAPORU ━━━━━━━━━━━━', type: 'error' },
+            { text: `💀 İmha Edilen Düşman: ${destroyed}`, type: 'success' },
+            { text: `⚠️ Kaybedilen Gemi: ${lostShips}`, type: 'warning' },
+            { text: `💰 Ganimet: +${destroyed * 1000} kredi`, type: 'special' },
+            gameState.enemies > 0 
+              ? { text: `⚠️ Kalan Düşman: ${gameState.enemies}`, type: 'warning' }
+              : { text: '✅ Bölge temizlendi!', type: 'success' },
+            { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'error' }
+          ], 100);
+          updateStatusBars();
+        }, 1500);
+      },
+      
+      fleet: () => {
+        const status = gameState.ships >= 1000 ? 'MÜKEMMEL' : 
+                       gameState.ships >= 500 ? 'İYİ' : 
+                       gameState.ships >= 100 ? 'ORTA' : 'KRİTİK';
+        
+        addMultiOutput([
+          { text: '┌─────────────────────────────────────────┐', type: 'info' },
+          { text: '│         🚀 FİLO DURUM RAPORU           │', type: 'special' },
+          { text: '├─────────────────────────────────────────┤', type: 'info' },
+          { text: `│  Toplam Gemi    : ${String(gameState.ships).padStart(5)}                │`, type: 'normal' },
+          { text: `│  Filo Durumu    : ${status.padEnd(10)}             │`, type: status === 'KRİTİK' ? 'error' : 'success' },
+          { text: `│  Savaş Hazırlığı: ${gameState.ships >= 100 ? 'HAZIR' : 'YETERSİZ'}                │`, type: gameState.ships >= 100 ? 'success' : 'error' },
+          { text: '├─────────────────────────────────────────┤', type: 'info' },
+          { text: '│  📊 Gemi Tipleri:                       │', type: 'warning' },
+          { text: `│     • Savaş Gemisi   : ${Math.floor(gameState.ships * 0.4)}             │`, type: 'normal' },
+          { text: `│     • Kruvazör       : ${Math.floor(gameState.ships * 0.3)}             │`, type: 'normal' },
+          { text: `│     • Destroyer      : ${Math.floor(gameState.ships * 0.2)}             │`, type: 'normal' },
+          { text: `│     • Taşıyıcı       : ${Math.floor(gameState.ships * 0.1)}             │`, type: 'normal' },
+          { text: '└─────────────────────────────────────────┘', type: 'info' }
+        ], 40);
+      },
+      
+      build: (args) => {
+        const count = parseInt(args[0]) || 10;
+        const cost = count * 100;
+        
+        if (gameState.credits < cost) {
+          addOutput(`⚠️ HATA: Yetersiz kredi! ${count} gemi için ${cost} kredi gerekli.`, 'error');
+          return;
+        }
+        
+        gameState.credits -= cost;
+        gameState.ships += count;
+        
+        addMultiOutput([
+          { text: '🔧 Gemi inşası başlatıldı...', type: 'info' },
+          { text: `✅ ${count} adet gemi inşa edildi!`, type: 'success' },
+          { text: `💰 Harcanan: ${cost} kredi`, type: 'warning' },
+          { text: `🚀 Yeni Filo Boyutu: ${gameState.ships} gemi`, type: 'special' }
+        ], 200);
+        updateStatusBars();
+      },
+      
+      shield: () => {
+        if (gameState.shield >= 100) {
+          addOutput('ℹ️ Kalkan zaten maksimum güçte!', 'info');
+          return;
+        }
+        if (gameState.energy < 30) {
+          addOutput('⚠️ HATA: Kalkan şarjı için yeterli enerji yok!', 'error');
+          return;
+        }
+        
+        gameState.energy -= 30;
+        gameState.shield = Math.min(100, gameState.shield + 40);
+        
+        addMultiOutput([
+          { text: '🛡️ Kalkan şarj ediliyor...', type: 'info' },
+          { text: '█████████████████████████ 100%', type: 'success' },
+          { text: `✅ Kalkan gücü: ${gameState.shield}%`, type: 'success' }
+        ], 300);
+        updateStatusBars();
+      },
+      
+      charge: () => {
+        if (gameState.energy >= 100) {
+          addOutput('ℹ️ Enerji zaten maksimum seviyede!', 'info');
+          return;
+        }
+        
+        addOutput('⚡ Enerji reaktörleri şarj ediliyor...', 'warning');
+        
+        setTimeout(() => {
+          gameState.energy = Math.min(100, gameState.energy + 30);
+          addOutput(`✅ Enerji seviyesi: ${gameState.energy}%`, 'success');
+          updateStatusBars();
+        }, 1500);
+      },
+      
+      hyperjump: () => {
+        if (gameState.energy < 50) {
+          addOutput('⚠️ HATA: Işık hızı sıçraması için en az %50 enerji gerekli!', 'error');
+          return;
+        }
+        
+        gameState.energy -= 50;
+        const newSector = sectors[Math.floor(Math.random() * sectors.length)] + '-' + (Math.floor(Math.random() * 9) + 1);
+        
+        addOutput('🌀 Işık hızı motoru aktif...', 'special');
+        
+        setTimeout(() => {
+          addMultiOutput([
+            { text: '════════════════════════════════════════', type: 'special' },
+            { text: '         ✨ IŞIK HIZI SIÇRAMASI ✨', type: 'special' },
+            { text: '════════════════════════════════════════', type: 'special' },
+            '',
+            { text: `   Önceki Konum: ${gameState.currentSector}`, type: 'info' },
+            { text: `   Yeni Konum  : ${newSector}`, type: 'success' },
+            '',
+            { text: '   Durum: BAŞARILI', type: 'success' },
+            { text: '════════════════════════════════════════', type: 'special' }
+          ], 100);
+          
+          gameState.currentSector = newSector;
+          gameState.enemies = 0;
+          updateStatusBars();
+        }, 2000);
+      },
+      
+      explore: () => {
+        if (gameState.energy < 15) {
+          addOutput('⚠️ HATA: Keşif için yeterli enerji yok!', 'error');
+          return;
+        }
+        
+        gameState.energy -= 15;
+        addOutput('🔭 Keşif operasyonu başlatılıyor...', 'info');
+        
+        setTimeout(() => {
+          const discoveries = [
+            '🌟 Yeni bir yıldız sistemi keşfedildi!',
+            '💎 Nadir mineral yatağı bulundu!',
+            '🛸 Antik uzay enkaz alanı tespit edildi!',
+            '🌌 Karadelik anomalisi gözlemlendi!',
+            '🔬 Bilinmeyen enerji kaynağı keşfedildi!',
+            '🏛️ Terk edilmiş uzay istasyonu bulundu!',
+            '☄️ Değerli asteroid kuşağı tespit edildi!'
+          ];
+          
+          const discovery = discoveries[Math.floor(Math.random() * discoveries.length)];
+          gameState.credits += 2000;
+          
+          addMultiOutput([
+            { text: '━━━━━━━━━━ KEŞİF RAPORU ━━━━━━━━━━', type: 'info' },
+            { text: discovery, type: 'success' },
+            { text: '💰 Bonus: +2000 kredi', type: 'special' },
+            { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'info' }
+          ], 150);
+          updateStatusBars();
+        }, 1500);
+      },
+      
+      map: () => {
+        addMultiOutput([
+          { text: '╔════════════════════════════════════════════════════╗', type: 'info' },
+          { text: '║           🗺️ GALAKTİK HARİTA                       ║', type: 'special' },
+          { text: '╠════════════════════════════════════════════════════╣', type: 'info' },
+          { text: '║                    ★                               ║', type: 'warning' },
+          { text: '║              ★         ★                           ║', type: 'normal' },
+          { text: '║         ★    ╔═══╗         ★                       ║', type: 'normal' },
+          { text: '║    ★         ║ 🚀║              ★                   ║', type: 'success' },
+          { text: '║              ╚═══╝    ★                            ║', type: 'normal' },
+          { text: '║         ★          ★       ★                       ║', type: 'normal' },
+          { text: '║    ★        ★              ★                       ║', type: 'normal' },
+          { text: '║                  ★                                 ║', type: 'warning' },
+          { text: '╠════════════════════════════════════════════════════╣', type: 'info' },
+          { text: `║  📍 Mevcut Sektör: ${gameState.currentSector.padEnd(25)}      ║`, type: 'success' },
+          { text: `║  🎯 Fethedilen   : ${String(gameState.conquered).padEnd(3)} gezegen                   ║`, type: 'special' },
+          { text: '╚════════════════════════════════════════════════════╝', type: 'info' }
+        ], 30);
+      },
+      
+      credits: () => {
+        addMultiOutput([
+          { text: '┌────────────────────────────────────┐', type: 'special' },
+          { text: '│       💰 KREDİ BİLGİSİ            │', type: 'special' },
+          { text: '├────────────────────────────────────┤', type: 'special' },
+          { text: `│   Bakiye: ${String(gameState.credits).padStart(8)} KREDİ       │`, type: 'success' },
+          { text: '├────────────────────────────────────┤', type: 'special' },
+          { text: '│   💡 Fiyatlar:                     │', type: 'info' },
+          { text: '│      • Gemi İnşası : 100/adet     │', type: 'normal' },
+          { text: '│      • Sistem Onar : 500          │', type: 'normal' },
+          { text: '│      • Yükseltme   : 1000         │', type: 'normal' },
+          { text: '└────────────────────────────────────┘', type: 'special' }
+        ], 50);
+      },
+      
+      mine: () => {
+        if (gameState.energy < 20) {
+          addOutput('⚠️ HATA: Madencilik için yeterli enerji yok!', 'error');
+          return;
+        }
+        
+        gameState.energy -= 20;
+        const earned = Math.floor(Math.random() * 3000) + 1000;
+        gameState.credits += earned;
+        
+        addMultiOutput([
+          { text: '⛏️ Madencilik operasyonu başlatıldı...', type: 'info' },
+          { text: '█████████████████████ %100', type: 'success' },
+          { text: `💎 Kazanılan: +${earned} kredi`, type: 'special' }
+        ], 400);
+        updateStatusBars();
+      },
+      
+      repair: () => {
+        if (gameState.credits < 500) {
+          addOutput('⚠️ HATA: Onarım için 500 kredi gerekli!', 'error');
+          return;
+        }
+        
+        gameState.credits -= 500;
+        gameState.energy = 100;
+        gameState.shield = 100;
+        
+        addMultiOutput([
+          { text: '🔧 Onarım operasyonu başlatıldı...', type: 'info' },
+          { text: '✅ Tüm sistemler onarıldı!', type: 'success' },
+          { text: '⚡ Enerji: 100%', type: 'success' },
+          { text: '🛡️ Kalkan: 100%', type: 'success' }
+        ], 200);
+        updateStatusBars();
+      },
+      
+      nuke: () => {
+        if (gameState.energy < 80) {
+          addOutput('⚠️ HATA: Nükleer saldırı için %80 enerji gerekli!', 'error');
+          return;
+        }
+        
+        gameState.energy -= 80;
+        
+        addOutput('☢️ NÜKLEER SALDIRI BAŞLATILIYOR...', 'error');
+        
+        setTimeout(() => {
+          const destroyed = gameState.enemies;
+          gameState.enemies = 0;
+          gameState.conquered += Math.floor(Math.random() * 2) + 1;
+          
+          addMultiOutput([
+            { text: '💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥', type: 'error' },
+            { text: '       ☢️ NÜKLEER DARBE BAŞARILI ☢️', type: 'error' },
+            { text: '💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥', type: 'error' },
+            '',
+            { text: `   İmha edilen düşman: ${destroyed}`, type: 'success' },
+            { text: '   Bölge tamamen temizlendi!', type: 'success' }
+          ], 100);
+          updateStatusBars();
+        }, 2000);
+      },
+      
+      hack: () => {
+        if (gameState.energy < 25) {
+          addOutput('⚠️ HATA: Hack için yeterli enerji yok!', 'error');
+          return;
+        }
+        
+        gameState.energy -= 25;
+        addOutput('💻 Düşman sistemlerine sızılıyor...', 'special');
+        
+        setTimeout(() => {
+          if (Math.random() > 0.4) {
+            const stolen = Math.floor(Math.random() * 5000) + 2000;
+            gameState.credits += stolen;
+            
+            addMultiOutput([
+              { text: '✅ HACK BAŞARILI!', type: 'success' },
+              { text: `💰 Çalınan kredi: +${stolen}`, type: 'special' },
+              { text: '🔓 Düşman savunması zayıflatıldı', type: 'info' }
+            ], 150);
+          } else {
+            gameState.shield -= 10;
+            addMultiOutput([
+              { text: '❌ HACK BAŞARISIZ!', type: 'error' },
+              { text: '⚠️ Karşı saldırı tespit edildi!', type: 'warning' },
+              { text: '🛡️ Kalkan hasarı: -10%', type: 'error' }
+            ], 150);
+          }
+          updateStatusBars();
+        }, 2000);
+      },
+      
+      broadcast: (args) => {
+        const message = args.join(' ') || 'Tüm gemiler dikkat!';
+        addMultiOutput([
+          { text: '📡 Yayın gönderiliyor...', type: 'info' },
+          { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'warning' },
+          { text: `   "${message}"`, type: 'special' },
+          { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'warning' },
+          { text: '✅ Mesaj tüm filo gemilerine iletildi!', type: 'success' }
+        ], 150);
+      },
+      
+      selfdestruct: () => {
+        addMultiOutput([
+          { text: '⚠️⚠️⚠️ UYARI: OTOMATİK İMHA SİSTEMİ ⚠️⚠️⚠️', type: 'error' },
+          { text: '', type: 'normal' },
+          { text: 'Bu işlem TÜM gemi ve kaynakları yok edecek!', type: 'warning' },
+          { text: 'Onaylamak için "confirm_destroy" yazın.', type: 'info' }
+        ], 100);
+      },
+      
+      confirm_destroy: () => {
+        addOutput('💥 İMHA SİSTEMİ AKTİF...', 'error');
+        
+        let count = 5;
+        const countdown = setInterval(() => {
+          if (count > 0) {
+            addOutput(`   ${count}...`, 'error');
+            count--;
+          } else {
+            clearInterval(countdown);
+            gameState = {
+              energy: 100,
+              shield: 100,
+              conquered: 0,
+              ships: 1000,
+              credits: 50000,
+              discoveries: [],
+              currentSector: 'Alpha-7',
+              enemies: 0,
+              commandHistory: [],
+              historyIndex: -1
+            };
+            
+            addMultiOutput([
+              { text: '', type: 'normal' },
+              { text: '═══════════════════════════════════════════', type: 'special' },
+              { text: '       🔄 SİSTEM YENİDEN BAŞLATILDI', type: 'success' },
+              { text: '       Tüm değerler sıfırlandı.', type: 'info' },
+              { text: '═══════════════════════════════════════════', type: 'special' }
+            ], 200);
+            updateStatusBars();
+          }
+        }, 1000);
+      },
+      
+      trade: () => {
+        const options = [
+          { name: 'Yakıt Hücresi', cost: 500, benefit: 'enerji +20' },
+          { name: 'Kalkan Modülü', cost: 800, benefit: 'kalkan +30' },
+          { name: 'Savaş Gemisi', cost: 1000, benefit: '10 gemi' }
+        ];
+        
+        addMultiOutput([
+          { text: '🏪 TİCARET İSTASYONU', type: 'special' },
+          { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'info' },
+          { text: '   1. Yakıt Hücresi  - 500 kredi  (enerji +20)', type: 'normal' },
+          { text: '   2. Kalkan Modülü  - 800 kredi  (kalkan +30)', type: 'normal' },
+          { text: '   3. Savaş Gemisi   - 1000 kredi (10 gemi)', type: 'normal' },
+          { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'info' },
+          { text: 'Satın almak için: buy [numara]', type: 'info' }
+        ], 50);
+      },
+      
+      buy: (args) => {
+        const item = parseInt(args[0]);
+        
+        if (item === 1) {
+          if (gameState.credits < 500) {
+            addOutput('⚠️ Yetersiz kredi!', 'error');
+            return;
+          }
+          gameState.credits -= 500;
+          gameState.energy = Math.min(100, gameState.energy + 20);
+          addOutput('✅ Yakıt Hücresi satın alındı! Enerji +20', 'success');
+        } else if (item === 2) {
+          if (gameState.credits < 800) {
+            addOutput('⚠️ Yetersiz kredi!', 'error');
+            return;
+          }
+          gameState.credits -= 800;
+          gameState.shield = Math.min(100, gameState.shield + 30);
+          addOutput('✅ Kalkan Modülü satın alındı! Kalkan +30', 'success');
+        } else if (item === 3) {
+          if (gameState.credits < 1000) {
+            addOutput('⚠️ Yetersiz kredi!', 'error');
+            return;
+          }
+          gameState.credits -= 1000;
+          gameState.ships += 10;
+          addOutput('✅ Savaş Gemisi satın alındı! +10 gemi', 'success');
+        } else {
+          addOutput('⚠️ Geçersiz seçim! 1, 2 veya 3 girin.', 'error');
+        }
+        updateStatusBars();
+      },
+      
+      upgrade: () => {
+        if (gameState.credits < 1000) {
+          addOutput('⚠️ HATA: Yükseltme için 1000 kredi gerekli!', 'error');
+          return;
+        }
+        
+        gameState.credits -= 1000;
+        
+        addMultiOutput([
+          { text: '🔧 Sistem yükseltmesi başlatılıyor...', type: 'info' },
+          { text: '████████████████████ %100', type: 'success' },
+          { text: '✅ Tüm sistemler yükseltildi!', type: 'success' },
+          { text: '   • Tarama menzili artırıldı', type: 'normal' },
+          { text: '   • Saldırı gücü güçlendirildi', type: 'normal' },
+          { text: '   • Savunma sistemleri iyileştirildi', type: 'normal' }
+        ], 200);
+        updateStatusBars();
+      },
+      
+      defend: () => {
+        if (gameState.energy < 20) {
+          addOutput('⚠️ HATA: Savunma için yeterli enerji yok!', 'error');
+          return;
+        }
+        
+        gameState.energy -= 20;
+        gameState.shield = Math.min(100, gameState.shield + 25);
+        
+        addMultiOutput([
+          { text: '🛡️ Savunma pozisyonu alındı!', type: 'info' },
+          { text: '   • Kalkan güçlendirildi +25%', type: 'success' },
+          { text: '   • Tüm gemiler savunma formasyonunda', type: 'success' }
+        ], 150);
+        updateStatusBars();
+      },
+      
+      clear: () => {
+        document.getElementById('terminal-output').innerHTML = '';
+        addOutput('🖥️ Terminal temizlendi.', 'system');
+      }
+    };
+    
+    function processCommand(input) {
+      const trimmed = input.trim().toLowerCase();
+      if (!trimmed) return;
+      
+      gameState.commandHistory.push(trimmed);
+      gameState.historyIndex = gameState.commandHistory.length;
+      
+      addOutput(`❯ ${input}`, 'system');
+      
+      const parts = trimmed.split(' ');
+      const cmd = parts[0];
+      const args = parts.slice(1);
+      
+      if (commands[cmd]) {
+        commands[cmd](args);
+      } else {
+        addOutput(`⚠️ Bilinmeyen komut: "${cmd}". Yardım için 'help' yazın.`, 'error');
+      }
+    }
+    
+    function showWelcome() {
+      const title = config.terminal_title || defaultConfig.terminal_title;
+      const subtitle = config.welcome_message || defaultConfig.welcome_message;
+      
+      addMultiOutput([
+        { text: '', type: 'normal' },
+        { text: '╔═══════════════════════════════════════════════════════════════════╗', type: 'special' },
+        { text: '║                                                                   ║', type: 'special' },
+        { text: `║     🌟 ${title.padEnd(20)} 🌟                              ║`, type: 'special' },
+        { text: `║        ${subtitle.padEnd(40)}                 ║`, type: 'info' },
+        { text: '║                                                                   ║', type: 'special' },
+        { text: '║     "Yıldızlar fethedilmeyi bekliyor, Komutan!"                   ║', type: 'warning' },
+        { text: '║                                                                   ║', type: 'special' },
+        { text: '╚═══════════════════════════════════════════════════════════════════╝', type: 'special' },
+        { text: '', type: 'normal' },
+        { text: '📋 Komut listesi için "help" yazın.', type: 'info' },
+        { text: '', type: 'normal' }
+      ], 50);
+    }
+    
+    async function onConfigChange(newConfig) {
+      const title = newConfig.terminal_title || defaultConfig.terminal_title;
+      const subtitle = newConfig.welcome_message || defaultConfig.welcome_message;
+      const fontFamily = newConfig.font_family || defaultConfig.font_family;
+      const fontSize = newConfig.font_size || defaultConfig.font_size;
+      const primaryColor = newConfig.primary_color || defaultConfig.primary_color;
+      const textColor = newConfig.text_color || defaultConfig.text_color;
+      
+      document.getElementById('main-title').textContent = title;
+      document.getElementById('subtitle').textContent = subtitle;
+      
+      document.body.style.fontFamily = `${fontFamily}, monospace`;
+      document.getElementById('terminal-output').style.fontSize = `${fontSize}px`;
+      
+      document.getElementById('main-title').style.color = primaryColor;
+    }
+    
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              cfg.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => cfg.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              cfg.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (value) => {
+              cfg.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => cfg.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              cfg.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => cfg.highlight_color || defaultConfig.highlight_color,
+            set: (value) => {
+              cfg.highlight_color = value;
+              window.elementSdk.setConfig({ highlight_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => cfg.font_family || defaultConfig.font_family,
+          set: (value) => {
+            cfg.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => cfg.font_size || defaultConfig.font_size,
+          set: (value) => {
+            cfg.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+    
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['terminal_title', cfg.terminal_title || defaultConfig.terminal_title],
+        ['welcome_message', cfg.welcome_message || defaultConfig.welcome_message]
+      ]);
+    }
+    
+    // Initialize
+    createStars();
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+    
+    const commandInput = document.getElementById('command-input');
+    const executeBtn = document.getElementById('execute-btn');
+    
+    commandInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        processCommand(commandInput.value);
+        commandInput.value = '';
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (gameState.historyIndex > 0) {
+          gameState.historyIndex--;
+          commandInput.value = gameState.commandHistory[gameState.historyIndex];
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (gameState.historyIndex < gameState.commandHistory.length - 1) {
+          gameState.historyIndex++;
+          commandInput.value = gameState.commandHistory[gameState.historyIndex];
+        } else {
+          gameState.historyIndex = gameState.commandHistory.length;
+          commandInput.value = '';
+        }
+      }
+    });
+    
+    executeBtn.addEventListener('click', () => {
+      processCommand(commandInput.value);
+      commandInput.value = '';
+      commandInput.focus();
+    });
+    
+    document.querySelectorAll('.quick-cmd').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cmd = btn.dataset.cmd;
+        processCommand(cmd);
+      });
+    });
+    
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+      config = window.elementSdk.config || config;
+    }
+    
+    showWelcome();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cd9bd6247dfc6e8',t:'MTc3MTA0MjQ3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cd9c78e20a4e206',t:'MTc3MTA0Mjg5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
 
 
-           
+        
+    </section>   
            
            
            <!-- Services Section -->
