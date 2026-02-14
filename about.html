@@ -634,897 +634,641 @@
             </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
        <a href=" <!doctype html>
-<html lang="tr">
+<html lang="tr" class="h-full">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StarTechnology.space - Gelecek Teknoloji Hub</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Star Technology Space Terminal</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet">
   <style>
- @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
- 
- :root {
- --cyber-blue: #00f5ff;
- --cyber-purple: #8a2be2;
- --cyber-pink: #ff1493;
- --cyber-green: #39ff14;
- --dark-bg: #0a0a0a;
- --grid-color: rgba(0, 245, 255, 0.1);
- }
- 
- html, body {
- height: 100%;
- width: 100%;
- }
- 
- body {
- font-family: 'Rajdhani', sans-serif;
- background: var(--dark-bg);
- overflow-x: hidden;
- }
- 
- .cyber-font {
- font-family: 'Orbitron', monospace;
- }
- 
- .cyber-grid {
- background-image: 
- linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
- linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px);
- background-size: 50px 50px;
- animation: grid-move 20s linear infinite;
- }
- 
- @keyframes grid-move {
- 0% { background-position: 0 0; }
- 100% { background-position: 50px 50px; }
- }
- 
- .glow-text {
- text-shadow: 0 0 10px var(--cyber-blue), 0 0 20px var(--cyber-blue), 0 0 30px var(--cyber-blue);
- }
- 
- .glow-border {
- box-shadow: 0 0 20px rgba(0, 245, 255, 0.5), inset 0 0 20px rgba(0, 245, 255, 0.1);
- border: 1px solid var(--cyber-blue);
- }
- 
- .cyber-button {
- background: linear-gradient(45deg, transparent, rgba(0, 245, 255, 0.1), transparent);
- border: 1px solid var(--cyber-blue);
- position: relative;
- overflow: hidden;
- transition: all 0.3s ease;
- }
- 
- .cyber-button:hover {
- box-shadow: 0 0 30px rgba(0, 245, 255, 0.7);
- transform: translateY(-2px);
- }
- 
- .cyber-button::before {
- content: '';
- position: absolute;
- top: 0;
- left: -100%;
- width: 100%;
- height: 100%;
- background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
- transition: left 0.5s;
- }
- 
- .cyber-button:hover::before {
- left: 100%;
- }
- 
- .floating {
- animation: float 6s ease-in-out infinite;
- }
- 
- @keyframes float {
- 0%, 100% { transform: translateY(0px); }
- 50% { transform: translateY(-20px); }
- }
- 
- .pulse-ring {
- animation: pulse-ring 2s infinite;
- }
- 
- @keyframes pulse-ring {
- 0% { transform: scale(1); opacity: 1; }
- 100% { transform: scale(2); opacity: 0; }
- }
- 
- .data-stream {
- position: absolute;
- width: 2px;
- height: 100px;
- background: linear-gradient(to bottom, transparent, var(--cyber-green), transparent);
- animation: data-flow 3s linear infinite;
- }
- 
- @keyframes data-flow {
- 0% { transform: translateY(-100px); opacity: 0; }
- 50% { opacity: 1; }
- 100% { transform: translateY(100vh); opacity: 0; }
- }
- 
- .hologram {
- background: linear-gradient(45deg, 
- rgba(0, 245, 255, 0.1) 0%,
- rgba(138, 43, 226, 0.1) 25%,
- rgba(255, 20, 147, 0.1) 50%,
- rgba(57, 255, 20, 0.1) 75%,
- rgba(0, 245, 255, 0.1) 100%);
- background-size: 400% 400%;
- animation: hologram-shift 4s ease-in-out infinite;
- }
- 
- @keyframes hologram-shift {
- 0%, 100% { background-position: 0% 50%; }
- 50% { background-position: 100% 50%; }
- }
- 
- /* Terminal Styles */
- .terminal-wrapper {
- width: 100%;
- height: 100%;
- display: flex;
- flex-direction: column;
- background: rgba(3, 7, 18, 0.95);
- border: 2px solid var(--cyber-blue);
- box-shadow: 0 0 20px rgba(0, 245, 255, 0.3), inset 0 0 20px rgba(0, 245, 255, 0.1);
- position: relative;
- overflow: hidden;
- }
- 
- .terminal-wrapper::before {
- content: '';
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- pointer-events: none;
- background: linear-gradient(
- 0deg,
- rgba(0, 255, 0, 0.03) 1px,
- transparent 1px
- );
- background-size: 100% 2px;
- animation: scanlines 8s linear infinite;
- z-index: 1;
- }
- 
- @keyframes scanlines {
- 0% { transform: translateY(0); }
- 100% { transform: translateY(10px); }
- }
- 
- .terminal-header {
- background: linear-gradient(90deg, #1a0033, #330066, #1a0033);
- padding: 12px 20px;
- border-bottom: 2px solid #ff00ff;
- display: flex;
- justify-content: space-between;
- align-items: center;
- box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
- position: relative;
- z-index: 2;
- }
- 
- .terminal-title {
- font-size: 16px;
- font-weight: bold;
- color: var(--cyber-blue);
- text-shadow: 0 0 10px var(--cyber-blue);
- letter-spacing: 2px;
- }
- 
- .terminal-status {
- display: flex;
- gap: 15px;
- font-size: 12px;
- color: var(--cyber-green);
- }
- 
- .status-item {
- display: flex;
- align-items: center;
- gap: 5px;
- }
- 
- .status-light {
- width: 8px;
- height: 8px;
- background: var(--cyber-green);
- border-radius: 50%;
- box-shadow: 0 0 5px var(--cyber-green);
- animation: pulse 1.5s ease-in-out infinite;
- }
- 
- @keyframes pulse {
- 0%, 100% { opacity: 1; }
- 50% { opacity: 0.5; }
- }
- 
- .terminal-content {
- flex: 1;
- overflow-y: auto;
- overflow-x: hidden;
- padding: 20px;
- background: rgba(3, 7, 18, 0.9);
- position: relative;
- z-index: 2;
- scrollbar-width: thin;
- scrollbar-color: var(--cyber-blue) rgba(0, 255, 255, 0.1);
- }
- 
- .terminal-content::-webkit-scrollbar {
- width: 8px;
- }
- 
- .terminal-content::-webkit-scrollbar-track {
- background: rgba(0, 255, 255, 0.1);
- }
- 
- .terminal-content::-webkit-scrollbar-thumb {
- background: var(--cyber-blue);
- border-radius: 4px;
- box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
- }
- 
- .terminal-line {
- margin-bottom: 8px;
- line-height: 1.6;
- word-break: break-word;
- font-size: 13px;
- }
- 
- .command-prompt {
- color: var(--cyber-pink);
- font-weight: bold;
- }
- 
- .command-text {
- color: var(--cyber-blue);
- margin-left: 5px;
- }
- 
- .output {
- color: var(--cyber-green);
- white-space: pre-wrap;
- }
- 
- .error {
- color: #ff0066;
- }
- 
- .welcome {
- color: #ffff00;
- animation: fadeIn 1s ease-in;
- }
- 
- @keyframes fadeIn {
- from { opacity: 0; }
- to { opacity: 1; }
- }
- 
- .terminal-input-area {
- background: rgba(0, 0, 0, 0.5);
- border-top: 2px solid var(--cyber-green);
- padding: 15px 20px;
- display: flex;
- gap: 10px;
- align-items: center;
- position: relative;
- z-index: 2;
- box-shadow: inset 0 2px 10px rgba(0, 255, 0, 0.1);
- }
- 
- .input-prompt {
- color: var(--cyber-pink);
- font-weight: bold;
- font-size: 14px;
- flex-shrink: 0;
- }
- 
- .terminal-input-wrapper {
- flex: 1;
- display: flex;
- align-items: center;
- border: 1px solid var(--cyber-blue);
- background: rgba(3, 7, 18, 0.8);
- padding: 5px 10px;
- box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.2);
- }
- 
- .terminal-input {
- flex: 1;
- background: transparent;
- border: none;
- color: var(--cyber-blue);
- font-family: 'Courier New', monospace;
- font-size: 14px;
- outline: none;
- caret-color: var(--cyber-blue);
- }
- 
- .terminal-input::placeholder {
- color: rgba(0, 255, 255, 0.5);
- }
- 
- .cursor {
- width: 2px;
- height: 16px;
- background: var(--cyber-blue);
- animation: blink 1s infinite;
- margin-left: 3px;
- }
- 
- @keyframes blink {
- 0%, 49% { opacity: 1; }
- 50%, 100% { opacity: 0; }
- }
- 
- .send-btn {
- background: linear-gradient(135deg, var(--cyber-pink), var(--cyber-blue));
- border: none;
- color: #000;
- padding: 8px 16px;
- border-radius: 4px;
- cursor: pointer;
- font-weight: bold;
- font-size: 12px;
- transition: all 0.3s ease;
- box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
- }
- 
- .send-btn:hover {
- box-shadow: 0 0 20px rgba(255, 0, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.6);
- transform: scale(1.05);
- }
- 
- .send-btn:active {
- transform: scale(0.95);
- }
- 
- /* Navigation */
- nav {
- position: fixed;
- top: 0;
- left: 0;
- right: 0;
- z-index: 50;
- background: rgba(10, 10, 10, 0.8);
- backdrop-filter: blur(10px);
- }
- 
- .nav-container {
- max-width: 1400px;
- margin: 0 auto;
- padding: 1rem 2rem;
- display: flex;
- justify-content: space-between;
- align-items: center;
- }
- 
- .logo {
- color: var(--cyber-blue);
- font-size: 24px;
- font-weight: 900;
- letter-spacing: 3px;
- text-shadow: 0 0 10px var(--cyber-blue);
- }
- 
- .nav-links {
- display: flex;
- gap: 2rem;
- }
- 
- .nav-link {
- color: var(--cyber-blue);
- text-decoration: none;
- position: relative;
- transition: all 0.3s ease;
- cursor: pointer;
- }
- 
- .nav-link::after {
- content: '';
- position: absolute;
- bottom: -5px;
- left: 0;
- width: 0;
- height: 2px;
- background: var(--cyber-pink);
- transition: width 0.3s ease;
- }
- 
- .nav-link:hover::after {
- width: 100%;
- }
- 
- /* Main Container */
- .main-wrapper {
- width: 100%;
- height: 100%;
- display: flex;
- flex-direction: column;
- }
- 
- .content-area {
- flex: 1;
- display: grid;
- grid-template-columns: 1fr 1fr;
- gap: 2rem;
- padding: 120px 2rem 2rem;
- max-width: 1400px;
- margin: 0 auto;
- width: 100%;
- }
- 
- .section {
- padding: 2rem;
- border-radius: 10px;
- }
- 
- .section-title {
- font-size: 28px;
- font-weight: 900;
- color: var(--cyber-blue);
- margin-bottom: 1.5rem;
- text-shadow: 0 0 10px var(--cyber-blue);
- }
- 
- .section-description {
- color: rgba(0, 245, 255, 0.7);
- margin-bottom: 2rem;
- line-height: 1.8;
- }
- 
- .terminal-container {
- background: rgba(3, 7, 18, 0.7);
- border: 2px solid var(--cyber-blue);
- border-radius: 10px;
- overflow: hidden;
- box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
- height: 500px;
- }
- 
- .features-list {
- display: flex;
- flex-direction: column;
- gap: 1.5rem;
- }
- 
- .feature-item {
- padding: 1.5rem;
- background: linear-gradient(135deg, rgba(0, 245, 255, 0.05), rgba(138, 43, 226, 0.05));
- border-left: 3px solid var(--cyber-pink);
- border-radius: 5px;
- transition: all 0.3s ease;
- cursor: pointer;
- }
- 
- .feature-item:hover {
- background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(138, 43, 226, 0.1));
- transform: translateX(10px);
- box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
- }
- 
- .feature-title {
- color: var(--cyber-pink);
- font-weight: 700;
- margin-bottom: 0.5rem;
- }
- 
- .feature-desc {
- color: rgba(0, 245, 255, 0.6);
- font-size: 14px;
- }
- 
- @media (max-width: 768px) {
- .content-area {
- grid-template-columns: 1fr;
- padding-top: 80px;
- }
- 
- .nav-links {
- gap: 1rem;
- }
- 
- .terminal-container {
- height: 400px;
- }
- }
- </style>
+    * { box-sizing: border-box; }
+    
+    .star-field {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--min-opacity); transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), inset 0 0 20px rgba(0, 255, 136, 0.1); }
+      50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.5), inset 0 0 30px rgba(0, 255, 136, 0.2); }
+    }
+    
+    @keyframes scan-line {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .terminal-container {
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+    
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to bottom, transparent, rgba(0, 255, 136, 0.4), transparent);
+      animation: scan-line 3s linear infinite;
+      pointer-events: none;
+    }
+    
+    .cursor-blink {
+      animation: blink 1s step-end infinite;
+    }
+    
+    .typing-effect {
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 2s steps(40, end);
+    }
+    
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .terminal-text {
+      text-shadow: 0 0 10px currentColor;
+    }
+    
+    .glow-border {
+      border: 1px solid rgba(0, 255, 136, 0.5);
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.3), inset 0 0 10px rgba(0, 255, 136, 0.1);
+    }
+    
+    .command-output {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 255, 136, 0.5) rgba(0, 0, 0, 0.3);
+    }
+    
+    .command-output::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .command-output::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    .command-output::-webkit-scrollbar-thumb {
+      background: rgba(0, 255, 136, 0.5);
+      border-radius: 3px;
+    }
+    
+    .nebula {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+    }
+  </style>
   <style>body { box-sizing: border-box; }</style>
-  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
  </head>
- <body class="cyber-grid"><!-- Navigation -->
-  <nav>
-   <div class="nav-container">
-    <div class="logo cyber-font">
-     ⟡ STAR.TECH ⟡
-    </div>
-    <div class="nav-links"><span class="nav-link" onclick="scrollToTerminal()">Terminal</span> <span class="nav-link">Teknoloji</span> <span class="nav-link">Hakkında</span>
-    </div>
-   </div>
-  </nav><!-- Main Wrapper -->
-  <div class="main-wrapper">
-   <div class="content-area"><!-- Left Panel - Features -->
-    <div class="section">
-     <h1 class="section-title cyber-font">◆ YÖNETİM PANELİ ◆</h1>
-     <p class="section-description">StarTechnology.space'e hoşgeldiniz. Gelişmiş terminal sistemi ile siber dünyaya bağlanın.</p>
-     <div class="features-list">
-      <div class="feature-item">
-       <div class="feature-title">
-        ⚡ Gerçek Zamanlı İşlem
-       </div>
-       <div class="feature-desc">
-        Komutlar anında işleniyor
-       </div>
-      </div>
-      <div class="feature-item">
-       <div class="feature-title">
-        🔐 Güvenlik Sistemi
-       </div>
-       <div class="feature-desc">
-        Şifreli bağlantı protokolü
-       </div>
-      </div>
-      <div class="feature-item">
-       <div class="feature-title">
-        🌐 Ağ Entegrasyonu
-       </div>
-       <div class="feature-desc">
-        Küresel sistem ağına erişim
-       </div>
-      </div>
-      <div class="feature-item">
-       <div class="feature-title">
-        📊 Veri Analitikleri
-       </div>
-       <div class="feature-desc">
-        Gelişmiş analiz araçları
-       </div>
-      </div>
-      <div class="feature-item">
-       <div class="feature-title">
-        🤖 AI İntegrasyonu
-       </div>
-       <div class="feature-desc">
-        Yapay zeka destekli sistemler
-       </div>
-      </div>
+ <body class="h-full m-0 p-0 overflow-hidden" style="background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a1a2e 100%);"><!-- Nebula Effects -->
+  <div class="nebula" style="width: 400px; height: 400px; background: radial-gradient(circle, #4a00e0 0%, transparent 70%); top: -100px; left: -100px;"></div>
+  <div class="nebula" style="width: 300px; height: 300px; background: radial-gradient(circle, #00d4aa 0%, transparent 70%); bottom: -50px; right: -50px;"></div>
+  <div class="nebula" style="width: 250px; height: 250px; background: radial-gradient(circle, #ff006e 0%, transparent 70%); top: 50%; right: 10%;"></div><!-- Star Field -->
+  <div class="star-field" id="starField"></div><!-- Main Container -->
+  <main class="h-full w-full flex items-center justify-center p-4 md:p-8 relative z-10">
+   <div class="w-full max-w-4xl"><!-- Terminal Header -->
+    <header class="floating mb-4">
+     <div class="flex items-center justify-center gap-3 mb-2">
+      <svg width="40" height="40" viewbox="0 0 40 40" class="text-emerald-400"><polygon points="20,2 38,20 20,38 2,20" fill="none" stroke="currentColor" stroke-width="2" /> <circle cx="20" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2" /> <circle cx="20" cy="20" r="3" fill="currentColor" />
+      </svg>
+      <h1 id="terminalTitle" class="text-2xl md:text-4xl font-bold tracking-wider terminal-text" style="font-family: 'Orbitron', sans-serif; color: #00ff88;">STAR TECH TERMINAL</h1>
+      <svg width="40" height="40" viewbox="0 0 40 40" class="text-emerald-400"><polygon points="20,2 38,20 20,38 2,20" fill="none" stroke="currentColor" stroke-width="2" /> <circle cx="20" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2" /> <circle cx="20" cy="20" r="3" fill="currentColor" />
+      </svg>
      </div>
-    </div><!-- Right Panel - Terminal -->
-    <div class="section">
-     <h1 class="section-title cyber-font" id="terminalTitle">◆ CYBERPUNK TERMINAL ◆</h1>
-     <div class="terminal-container" id="terminalWrapper">
-      <div class="terminal-wrapper">
-       <div class="terminal-header">
-        <div class="terminal-title">
-         ◆ CYBERPUNK TERMINAL v2.4.7 ◆
-        </div>
-        <div class="terminal-status">
-         <div class="status-item"><span class="status-light"></span> <span>ONLINE</span>
-         </div>
-         <div class="status-item"><span class="status-light"></span> <span>ACTIVE</span>
-         </div>
-        </div>
-       </div>
-       <div class="terminal-content" id="terminalContent"></div>
-       <div class="terminal-input-area"><span class="input-prompt">$</span>
-        <div class="terminal-input-wrapper"><input type="text" class="terminal-input" id="terminalInput" placeholder="Komut girin... (help yazarak komutları görün)" autocomplete="off">
-         <div class="cursor"></div>
-        </div><button class="send-btn" id="sendBtn">GÖNDERİ</button>
-       </div>
+     <p id="welcomeMessage" class="text-center text-sm tracking-widest" style="font-family: 'JetBrains Mono', monospace; color: #00d4aa;">★ GALACTIC COMMAND INTERFACE v3.7.2 ★</p>
+    </header><!-- Terminal Window -->
+    <div class="terminal-container relative rounded-lg overflow-hidden glow-border" style="background: rgba(0, 10, 20, 0.9);"><!-- Scan Line Effect -->
+     <div class="scan-line"></div><!-- Terminal Title Bar -->
+     <div class="flex items-center justify-between px-4 py-2 border-b" style="border-color: rgba(0, 255, 136, 0.3); background: rgba(0, 255, 136, 0.1);">
+      <div class="flex gap-2">
+       <div class="w-3 h-3 rounded-full bg-red-500"></div>
+       <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+       <div class="w-3 h-3 rounded-full bg-green-500"></div>
+      </div><span class="text-xs tracking-wider" style="font-family: 'JetBrains Mono', monospace; color: #00ff88;"> SECURE CONNECTION: SECTOR-7G </span>
+      <div class="flex items-center gap-2">
+       <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div><span class="text-xs" style="color: #00ff88;">ONLINE</span>
       </div>
+     </div><!-- Terminal Output Area -->
+     <div id="terminalOutput" class="command-output p-4 h-64 md:h-80 overflow-y-auto" style="font-family: 'JetBrains Mono', monospace;"><!-- Output will be rendered here -->
+     </div><!-- Command Input Area -->
+     <div class="flex items-center px-4 py-3 border-t" style="border-color: rgba(0, 255, 136, 0.3); background: rgba(0, 255, 136, 0.05);"><span class="mr-2 terminal-text" style="color: #00ff88;">❯</span> <span class="mr-2 text-cyan-400 terminal-text">startech@galaxy</span> <span class="mr-2" style="color: #ff006e;">~</span> <span class="mr-2" style="color: #00ff88;">$</span> <input type="text" id="commandInput" class="flex-1 bg-transparent outline-none terminal-text" style="font-family: 'JetBrains Mono', monospace; color: #00ff88; caret-color: #00ff88;" placeholder="enter command..." autocomplete="off"> <span class="cursor-blink terminal-text" style="color: #00ff88;">▊</span>
      </div>
-    </div>
+    </div><!-- Status Bar -->
+    <footer class="mt-4 flex flex-wrap justify-center gap-4 md:gap-8 text-xs" style="font-family: 'JetBrains Mono', monospace;">
+     <div class="flex items-center gap-2" style="color: #00d4aa;">
+      <svg width="16" height="16" viewbox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5" /> <path d="M8 4v4l3 2" stroke="currentColor" stroke-width="1.5" fill="none" />
+      </svg><span id="timeDisplay">00:00:00</span>
+     </div>
+     <div class="flex items-center gap-2" style="color: #4a90e2;">
+      <svg width="16" height="16" viewbox="0 0 16 16" fill="currentColor"><rect x="2" y="6" width="12" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.5" /> <rect x="4" y="8" width="7" height="2" fill="currentColor" /> <rect x="14" y="8" width="1" height="2" fill="currentColor" />
+      </svg><span>POWER: 98%</span>
+     </div>
+     <div class="flex items-center gap-2" style="color: #ff006e;">
+      <svg width="16" height="16" viewbox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5" /> <circle cx="8" cy="8" r="2" fill="currentColor" />
+      </svg><span>SIGNAL: STRONG</span>
+     </div>
+     <div class="flex items-center gap-2" style="color: #ffd700;"><span>★ COORDINATES: 47.3°N, 122.5°W</span>
+     </div>
+    </footer>
    </div>
-   <script>
- // Terminal Logic
- const terminalContent = document.getElementById('terminalContent');
- const terminalInput = document.getElementById('terminalInput');
- const sendBtn = document.getElementById('sendBtn');
- let commandHistory = [];
- let historyIndex = -1;
+  </main>
+  <script>
+    const defaultConfig = {
+      terminal_title: 'STAR TECH TERMINAL',
+      welcome_message: '★ GALACTIC COMMAND INTERFACE v3.7.2 ★',
+      background_color: '#0a0a1a',
+      terminal_bg_color: '#000a14',
+      text_color: '#00ff88',
+      accent_color: '#00d4aa',
+      highlight_color: '#ff006e'
+    };
 
- // Terminal Commands
- const commands = {
- help: () => {
- return `
-╔════════════════════════════════════════════════════════════════╗
-║                    KULLANILABILIR KOMUTLAR                     ║
-╚════════════════════════════════════════════════════════════════╝
+    let config = { ...defaultConfig };
+    
+    const terminalHistory = [];
+    let historyIndex = -1;
 
-📋 SİSTEM KOMUTLARI:
-  • help              - Komut listesini göster
-  • clear             - Terminal'ı temizle
-  • date              - Tarih ve saati göster
-  • time              - Geçerli saati göster
-  • whoami            - Sistem kullanıcısı
-  • pwd               - Çalışma dizini
-  • echo [TEXT]       - Metni yaz
-  • calc [IŞLEM]      - Basit hesaplamalar (örn: calc 5+3*2)
+    const commands = {
+      help: () => ({
+        type: 'info',
+        content: `
+╔══════════════════════════════════════════════════════════════╗
+║                    AVAILABLE COMMANDS                        ║
+╠══════════════════════════════════════════════════════════════╣
+║  help      - Display this help menu                          ║
+║  status    - Show system status                              ║
+║  scan      - Scan nearby sectors                             ║
+║  navigate  - Navigation controls                             ║
+║  comms     - Communication systems                           ║
+║  shields   - Shield status                                   ║
+║  weapons   - Weapons array status                            ║
+║  crew      - Crew manifest                                   ║
+║  mission   - Current mission briefing                        ║
+║  clear     - Clear terminal                                  ║
+║  date      - Show stardate                                   ║
+║  matrix    - Enter the matrix                                ║
+╚══════════════════════════════════════════════════════════════╝`
+      }),
+      
+      status: () => ({
+        type: 'success',
+        content: `
+┌─────────────────────────────────────┐
+│      SYSTEM STATUS REPORT           │
+├─────────────────────────────────────┤
+│  Hull Integrity:    ████████░░ 87%  │
+│  Shield Power:      █████████░ 94%  │
+│  Engine Output:     ████████░░ 82%  │
+│  Life Support:      ██████████ 100% │
+│  Weapons Systems:   ████████░░ 85%  │
+│  Fuel Reserves:     ███████░░░ 71%  │
+├─────────────────────────────────────┤
+│  STATUS: ALL SYSTEMS OPERATIONAL    │
+└─────────────────────────────────────┘`
+      }),
+      
+      scan: () => ({
+        type: 'warning',
+        content: `
+[SCANNING SECTOR 7G...]
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 100%
 
-🎮 EĞLENCELİ KOMUTLAR:
-  • hack              - Hacker modu
-  • matrix            - Matrix animasyonu
-  • disco             - Disco modu
-  • weather           - Hava durumu
-  • fortune           - Rastgele söz
+SCAN RESULTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+★ CELESTIAL BODIES DETECTED: 47
+  • Planets: 12
+  • Moons: 23
+  • Asteroids: 8
+  • Space Stations: 4
 
-📊 ARAÇLAR:
-  • neofetch          - Sistem bilgisi
-  • ls                - Dosyaları listele
-  • tree              - Dizin yapısı
-  • ipconfig          - Ağ bilgisi
-  • systeminfo        - Sistem detayları
-`;
- },
+⚠ ANOMALIES DETECTED: 2
+  • Quantum Fluctuation at 127.3°
+  • Unknown Energy Signature at 89.7°
 
- clear: () => {
- terminalContent.innerHTML = '';
- return null;
- },
+▲ POTENTIAL THREATS: 1
+  • Unidentified Vessel - Distance: 2.3 LY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+      }),
+      
+      navigate: () => ({
+        type: 'info',
+        content: `
+    ╔═══════════════════════════════╗
+    ║     NAVIGATION COMPUTER       ║
+    ╠═══════════════════════════════╣
+    ║                               ║
+    ║         ★  CURRENT           ║
+    ║           POSITION            ║
+    ║              ↓                ║
+    ║    ·  ·  ·  ◉  ·  ·  ·       ║
+    ║    ·  ★  ·  ·  ·  ☆  ·       ║
+    ║    ·  ·  ·  ·  ★  ·  ·       ║
+    ║                               ║
+    ║  HEADING: 127.3° MARK 45     ║
+    ║  SPEED: WARP 6.5             ║
+    ║  ETA: 3.7 STANDARD HOURS     ║
+    ╚═══════════════════════════════╝`
+      }),
+      
+      comms: () => ({
+        type: 'success',
+        content: `
+╭───────────────────────────────────╮
+│    COMMUNICATION SYSTEMS          │
+├───────────────────────────────────┤
+│  ✓ Subspace Radio:     ONLINE    │
+│  ✓ Emergency Beacon:   STANDBY   │
+│  ✓ Long Range Comm:    ONLINE    │
+│  ✓ Translator Matrix:  ACTIVE    │
+├───────────────────────────────────┤
+│  INCOMING MESSAGES: 3            │
+│  OUTGOING QUEUE: 0               │
+│  ENCRYPTED CHANNELS: SECURE      │
+╰───────────────────────────────────╯`
+      }),
+      
+      shields: () => ({
+        type: 'info',
+        content: `
+╔═══════════════════════════════════╗
+║         SHIELD ARRAY              ║
+╠═══════════════════════════════════╣
+║                                   ║
+║     FORWARD: ████████░░ 85%      ║
+║        AFT: █████████░ 92%       ║
+║       PORT: ████████░░ 88%       ║
+║  STARBOARD: █████████░ 94%       ║
+║                                   ║
+║     ┌─────────────┐              ║
+║     │   ▲ 85%    │              ║
+║     │ ◄───►      │              ║
+║     │88%│94%│    │              ║
+║     │   ▼ 92%    │              ║
+║     └─────────────┘              ║
+║                                   ║
+║  SHIELD HARMONICS: STABLE        ║
+╚═══════════════════════════════════╝`
+      }),
+      
+      weapons: () => ({
+        type: 'danger',
+        content: `
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃      WEAPONS ARRAY STATUS      ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃                                ┃
+┃  PHASER BANKS                  ┃
+┃    Bank 1: ████████░░ READY   ┃
+┃    Bank 2: █████████░ READY   ┃
+┃    Bank 3: ████████░░ READY   ┃
+┃                                ┃
+┃  PHOTON TORPEDOES              ┃
+┃    Loaded: 24/30               ┃
+┃    Status: ARMED               ┃
+┃                                ┃
+┃  TARGETING COMPUTER: ONLINE    ┃
+┃  LOCK STATUS: DISENGAGED       ┃
+┃                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`
+      }),
+      
+      crew: () => ({
+        type: 'info',
+        content: `
+╔════════════════════════════════════╗
+║          CREW MANIFEST             ║
+╠════════════════════════════════════╣
+║  TOTAL PERSONNEL: 127              ║
+├────────────────────────────────────┤
+║  ◉ Command Staff:     8            ║
+║  ◉ Bridge Crew:       12           ║
+║  ◉ Engineering:       34           ║
+║  ◉ Science Division:  28           ║
+║  ◉ Medical Staff:     15           ║
+║  ◉ Security:          22           ║
+║  ◉ Support Services:  8            ║
+├────────────────────────────────────┤
+║  ON DUTY:    78  │  OFF DUTY:  49  ║
+║  MEDICAL BAY: 3  │  DETAINED:   0  ║
+╚════════════════════════════════════╝`
+      }),
+      
+      mission: () => ({
+        type: 'warning',
+        content: `
+╔══════════════════════════════════════════╗
+║           MISSION BRIEFING               ║
+║          [CLASSIFIED LEVEL 3]            ║
+╠══════════════════════════════════════════╣
+║                                          ║
+║  OPERATION: STELLAR HORIZON              ║
+║  OBJECTIVE: Deep Space Reconnaissance    ║
+║                                          ║
+║  PRIMARY GOALS:                          ║
+║  1. Map uncharted regions of Sector 7G   ║
+║  2. Investigate anomalous readings       ║
+║  3. Establish contact with Station Omega ║
+║  4. Report findings to Command           ║
+║                                          ║
+║  MISSION TIME: 47:23:15                  ║
+║  STATUS: IN PROGRESS                     ║
+║  THREAT LEVEL: MODERATE                  ║
+║                                          ║
+╚══════════════════════════════════════════╝`
+      }),
+      
+      date: () => {
+        const now = new Date();
+        const stardate = (now.getFullYear() - 2000) * 1000 + 
+                        Math.floor((now.getMonth() * 30 + now.getDate()) / 0.365);
+        return {
+          type: 'info',
+          content: `
+╭─────────────────────────────────╮
+│       TEMPORAL REFERENCE        │
+├─────────────────────────────────┤
+│  STARDATE: ${stardate.toFixed(1)}           │
+│  EARTH DATE: ${now.toLocaleDateString()}      │
+│  SHIP TIME: ${now.toLocaleTimeString()}        │
+│  GALACTIC STANDARD: ${Math.floor(Math.random() * 1000)}.${Math.floor(Math.random() * 100)}      │
+╰─────────────────────────────────╯`
+        };
+      },
+      
+      matrix: () => ({
+        type: 'matrix',
+        content: `
+Wake up, Neo...
+The Matrix has you...
+Follow the white rabbit.
+Knock, knock, Neo.
 
- date: () => {
- const now = new Date();
- return `📅 ${now.toLocaleDateString('tr-TR', { 
- weekday: 'long', 
- year: 'numeric', 
- month: 'long', 
- day: 'numeric' 
- })}`;
- },
+01001000 01000101 01001100 01001100 01001111
+▓▒░ DECRYPTING REALITY ░▒▓
+████████████████████████████
 
- time: () => {
- const now = new Date();
- return `🕐 ${now.toLocaleTimeString('tr-TR')}`;
- },
+There is no spoon.`
+      }),
+      
+      clear: () => ({ type: 'clear', content: '' })
+    };
 
- whoami: () => {
- return `USER: CYBERPUNK_ADMIN\nHOST: NEO-TOKYO-SERVER-7\nPERMISSIONS: UNRESTRICTED`;
- },
+    function getOutputColor(type) {
+      const colors = {
+        info: config.text_color || defaultConfig.text_color,
+        success: '#00ff88',
+        warning: '#ffd700',
+        danger: '#ff006e',
+        error: '#ff4444',
+        matrix: '#00ff00'
+      };
+      return colors[type] || config.text_color || defaultConfig.text_color;
+    }
 
- pwd: () => {
- return `/root/cyberpunk/terminal`;
- },
+    function addOutput(content, type = 'info') {
+      const output = document.getElementById('terminalOutput');
+      const line = document.createElement('div');
+      line.className = 'mb-2 whitespace-pre terminal-text';
+      line.style.color = getOutputColor(type);
+      line.textContent = content;
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+    }
 
- echo: (args) => {
- return args || 'Boş mesaj';
- },
-
- calc: (expression) => {
- try {
- const result = eval(expression.replace(/[^0-9+\-*/().]/g, ''));
- return `= ${result}`;
- } catch {
- return '❌ Hatalı işlem!';
- }
- },
-
- hack: () => {
- return `
-⚠️  FİREWALL İHLAL EDİLİYOR...
-🔓 KOD ÇATISI BAŞARILI
-💾 VERİ TRANSFERİ: %${Math.floor(Math.random() * 100)}
-🎯 BAŞARILANDI - Sistem kontrolü ele geçirildi!
-`;
- },
-
- matrix: () => {
- let output = '';
- for (let i = 0; i < 15; i++) {
- output += Math.random().toString(2).substring(2).substring(0, 40) + '\n';
- }
- return output;
- },
-
- disco: () => {
- return `
-🎨 DİSCO MODU AKTİF
-💡 IŞIKLAR YANIP SÖNÜYOR...
-🎵 MÜZİK ÇALINIYOR...
-🕺 DANS ET ve EĞLEN!
-`;
- },
-
- weather: () => {
- const temps = ['☀️  25°C', '🌧️  18°C', '⛅ 22°C', '🌩️  15°C'];
- const weather = ['Açık', 'Yağmurlu', 'Bulutlu', 'Fırtınalı'];
- const idx = Math.floor(Math.random() * temps.length);
- return `
-NEO-TOKYO HAva Durumu:
-${temps[idx]} - ${weather[idx]}
-Nem: %${Math.floor(Math.random() * 100)}
-Rüzgar: ${Math.floor(Math.random() * 50)} km/s
-`;
- },
-
- fortune: () => {
- const fortunes = [
- '💎 "Gelecek teknoloji yok, sadece bugünün geleceği var."',
- '🤖 "Kod yazma, hayat yaz."',
- '⚡ "Eğer hata almıyorsan, yeterince hızlı gitmedin."',
- '🌌 "Dijital evren sonsuzdur, keşfet!"',
- '🔮 "Bir yazılımcının üstün olduğu tek şey: bugları bulmada."'
- ];
- return fortunes[Math.floor(Math.random() * fortunes.length)];
- },
-
- neofetch: () => {
- return `
+    function processCommand(cmd) {
+      const trimmedCmd = cmd.trim().toLowerCase();
+      
+      addOutput(`❯ ${cmd}`, 'info');
+      
+      if (trimmedCmd === '') return;
+      
+      terminalHistory.push(cmd);
+      historyIndex = terminalHistory.length;
+      
+      if (trimmedCmd === 'clear') {
+        document.getElementById('terminalOutput').innerHTML = '';
+        return;
+      }
+      
+      const command = commands[trimmedCmd];
+      if (command) {
+        const result = command();
+        addOutput(result.content, result.type);
+      } else {
+        addOutput(`
 ╔═══════════════════════════════════════════╗
-║      CYBERPUNK SYSTEM INFORMATION         ║
-╚═══════════════════════════════════════════╝
+║  ERROR: Command '${trimmedCmd}' not recognized  
+║  Type 'help' for available commands       ║
+╚═══════════════════════════════════════════╝`, 'error');
+      }
+    }
 
-OS: Cyberpunk Linux 2.4.7
-Kernel: NeoTokyo-5.15
-Uptime: 9999 days
-CPU: Quantum Processor v7
-RAM: 1024GB Cybernetic Memory
-GPU: Holographic RTX ∞
-Resolution: 8K Neuro-Vision
-`;
- },
+    function createStars() {
+      const starField = document.getElementById('starField');
+      starField.innerHTML = '';
+      const starCount = 150;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+        star.style.setProperty('--min-opacity', `${Math.random() * 0.3 + 0.2}`);
+        star.style.animationDelay = `${Math.random() * 3}s`;
+        
+        const hue = Math.random() > 0.8 ? Math.random() * 60 + 180 : 0;
+        if (hue > 0) {
+          star.style.background = `hsl(${hue}, 100%, 80%)`;
+        }
+        
+        starField.appendChild(star);
+      }
+    }
 
- ls: () => {
- return `
-📁 Dizin İçeriği:
-  drwx------ cyberpunk_core
-  -rw------- system_config.dat
-  -rw------- secret_data.enc
-  drwx------ neural_network
-  -rw------- encrypted_files.zip
-  lrwx------ portal -> /dev/singularity
-`;
- },
+    function updateTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('timeDisplay').textContent = `${hours}:${minutes}:${seconds}`;
+    }
 
- tree: () => {
- return `
-/root/
-├── cyberpunk/
-│   ├── core/
-│   ├── modules/
-│   └── config/
-├── system/
-│   ├── drivers/
-│   └── kernel/
-└── data/
-    ├── encrypted/
-    └── archived/
-`;
- },
+    function initializeTerminal() {
+      addOutput(`
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   ███████╗████████╗ █████╗ ██████╗     ████████╗███████╗    ║
+║   ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗    ╚══██╔══╝██╔════╝    ║
+║   ███████╗   ██║   ███████║██████╔╝       ██║   █████╗      ║
+║   ╚════██║   ██║   ██╔══██║██╔══██╗       ██║   ██╔══╝      ║
+║   ███████║   ██║   ██║  ██║██║  ██║       ██║   ███████╗    ║
+║   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝       ╚═╝   ╚══════╝    ║
+║                                                              ║
+║            SPACE TECHNOLOGY COMMAND INTERFACE                ║
+║                    Version 3.7.2                             ║
+╠══════════════════════════════════════════════════════════════╣
+║  Welcome, Commander. All systems are operational.            ║
+║  Type 'help' for a list of available commands.               ║
+╚══════════════════════════════════════════════════════════════╝
+      `, 'success');
+    }
 
- ipconfig: () => {
- return `
-Ağ Arayüzü Bilgisi:
-  Interface: eth0
-  IP Adresi: 192.168.2077.1
-  Gateway: 192.168.2077.254
-  DNS: 8.8.8.8
-  MAC: FF:00:FF:00:FF:00
-  Status: CONNECTED ✓
-`;
- },
+    async function onConfigChange(cfg) {
+      const terminalTitle = document.getElementById('terminalTitle');
+      const welcomeMessage = document.getElementById('welcomeMessage');
+      
+      if (terminalTitle) {
+        terminalTitle.textContent = cfg.terminal_title || defaultConfig.terminal_title;
+        terminalTitle.style.color = cfg.text_color || defaultConfig.text_color;
+      }
+      
+      if (welcomeMessage) {
+        welcomeMessage.textContent = cfg.welcome_message || defaultConfig.welcome_message;
+        welcomeMessage.style.color = cfg.accent_color || defaultConfig.accent_color;
+      }
 
- systeminfo: () => {
- return `
-SİSTEM BİLGİLERİ:
-  Bilgisayar: CYBERPUNK-SERVER
-  İşletim Sistemi: Cyberpunk OS v2.4
-  İşletim Sistemi Sürümü: Advanced Edition
-  Sistem Türü: 64-bit
-  Kullanıcı: ADMIN
-  Sistem Başladığı Saat: ${new Date().toLocaleString('tr-TR')}
-`;
- }
- };
+      document.body.style.background = `linear-gradient(135deg, ${cfg.background_color || defaultConfig.background_color} 0%, #1a0a2e 50%, #0a1a2e 100%)`;
+    }
 
- function printLine(text, type = 'output') {
- const line = document.createElement('div');
- line.className = `terminal-line ${type}`;
- line.textContent = text;
- terminalContent.appendChild(line);
- terminalContent.scrollTop = terminalContent.scrollHeight;
- }
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (value) => {
+              cfg.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => cfg.terminal_bg_color || defaultConfig.terminal_bg_color,
+            set: (value) => {
+              cfg.terminal_bg_color = value;
+              window.elementSdk.setConfig({ terminal_bg_color: value });
+            }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (value) => {
+              cfg.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => cfg.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              cfg.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => cfg.highlight_color || defaultConfig.highlight_color,
+            set: (value) => {
+              cfg.highlight_color = value;
+              window.elementSdk.setConfig({ highlight_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
 
- function executeCommand(input) {
- const trimmed = input.trim();
- 
- if (!trimmed) return;
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['terminal_title', cfg.terminal_title || defaultConfig.terminal_title],
+        ['welcome_message', cfg.welcome_message || defaultConfig.welcome_message]
+      ]);
+    }
 
- printLine(`$ ${trimmed}`, 'command-prompt');
- commandHistory.push(trimmed);
- historyIndex = -1;
+    // Initialize
+    createStars();
+    updateTime();
+    setInterval(updateTime, 1000);
+    initializeTerminal();
 
- const parts = trimmed.split(' ');
- const cmd = parts[0].toLowerCase();
- const args = parts.slice(1).join(' ');
+    // Event Listeners
+    const commandInput = document.getElementById('commandInput');
+    
+    commandInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        processCommand(commandInput.value);
+        commandInput.value = '';
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (historyIndex > 0) {
+          historyIndex--;
+          commandInput.value = terminalHistory[historyIndex];
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIndex < terminalHistory.length - 1) {
+          historyIndex++;
+          commandInput.value = terminalHistory[historyIndex];
+        } else {
+          historyIndex = terminalHistory.length;
+          commandInput.value = '';
+        }
+      }
+    });
 
- let output;
- if (commands[cmd]) {
- output = commands[cmd](args);
- if (output) {
- output.split('\n').forEach(line => {
- if (line.trim()) printLine(line, 'output');
- });
- }
- } else {
- printLine(`❌ Komut bulunamadı: '${cmd}'. 'help' yazarak komutları görebilirsiniz.`, 'error');
- }
- }
+    // Focus input on click anywhere
+    document.addEventListener('click', () => commandInput.focus());
 
- sendBtn.addEventListener('click', () => {
- const input = terminalInput.value;
- if (input.trim()) {
- executeCommand(input);
- terminalInput.value = '';
- }
- });
-
- terminalInput.addEventListener('keydown', (e) => {
- if (e.key === 'Enter') {
- const input = terminalInput.value;
- if (input.trim()) {
- executeCommand(input);
- terminalInput.value = '';
- }
- } else if (e.key === 'ArrowUp') {
- e.preventDefault();
- if (historyIndex < commandHistory.length - 1) {
- historyIndex++;
- terminalInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
- }
- } else if (e.key === 'ArrowDown') {
- e.preventDefault();
- if (historyIndex > 0) {
- historyIndex--;
- terminalInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
- } else if (historyIndex === 0) {
- historyIndex = -1;
- terminalInput.value = '';
- }
- }
- });
-
- terminalInput.addEventListener('focus', () => {
- terminalInput.parentElement.style.boxShadow = 'inset 0 0 10px rgba(0, 255, 255, 0.5), 0 0 15px rgba(0, 255, 255, 0.3)';
- });
-
- terminalInput.addEventListener('blur', () => {
- terminalInput.parentElement.style.boxShadow = 'inset 0 0 5px rgba(0, 255, 255, 0.2)';
- });
-
- function scrollToTerminal() {
- document.getElementById('terminalWrapper').scrollIntoView({ behavior: 'smooth' });
- terminalInput.focus();
- }
-
- // Welcome Message
- window.addEventListener('load', () => {
- printLine('╔════════════════════════════════════════════════════════════════╗', 'welcome');
- printLine('║                  CYBERPUNK TERMINAL v2.4.7                      ║', 'welcome');
- printLine('║              Advanced Biometric Access System                   ║', 'welcome');
- printLine('╚════════════════════════════════════════════════════════════════╝', 'welcome');
- printLine('', 'welcome');
- printLine('Cyberpunk Terminal\'e hoşgeldiniz. İleri teknoloji sisteminiz başarıyla başlatıldı.', 'welcome');
- printLine('', 'welcome');
- printLine('💡 İpucu: "help" yazarak kullanılabilir komutları görebilirsiniz.', 'welcome');
- printLine('', 'welcome');
- 
- terminalInput.focus();
- });
-</script>
-  </div>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cd32beec26ae206',t:'MTc3MDk3MzYwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cd9a932957fc6e8',t:'MTc3MTA0MTY1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
  </section>          
 
