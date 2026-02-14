@@ -633,7 +633,7 @@
                 <div class="w-32 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mt-4"></div>
             </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-       <a href=" <!doctype html>
+       <a href="<!doctype html>
 <html lang="tr" class="h-full">
  <head>
   <meta charset="UTF-8">
@@ -641,40 +641,19 @@
   <title>Star Technology Space Terminal</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
     
-    .star-field {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle var(--duration) ease-in-out infinite;
-    }
-    
-    @keyframes twinkle {
-      0%, 100% { opacity: var(--min-opacity); transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.2); }
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
     }
     
     @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), inset 0 0 20px rgba(0, 255, 136, 0.1); }
-      50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.5), inset 0 0 30px rgba(0, 255, 136, 0.2); }
-    }
-    
-    @keyframes scan-line {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
+      0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), inset 0 0 60px rgba(0, 255, 136, 0.1); }
+      50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.5), inset 0 0 80px rgba(0, 255, 136, 0.2); }
     }
     
     @keyframes blink {
@@ -682,593 +661,798 @@
       51%, 100% { opacity: 0; }
     }
     
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-    
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-10px); }
     }
     
-    .terminal-container {
-      animation: pulse-glow 4s ease-in-out infinite;
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
     }
     
-    .scan-line {
+    .scanline {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      width: 100%;
       height: 4px;
-      background: linear-gradient(to bottom, transparent, rgba(0, 255, 136, 0.4), transparent);
-      animation: scan-line 3s linear infinite;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.4), transparent);
+      animation: scanline 3s linear infinite;
       pointer-events: none;
+      z-index: 10;
+    }
+    
+    .terminal-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
     }
     
     .cursor-blink {
       animation: blink 1s step-end infinite;
     }
     
-    .typing-effect {
-      overflow: hidden;
-      white-space: nowrap;
-      animation: typing 2s steps(40, end);
-    }
-    
-    .floating {
-      animation: float 6s ease-in-out infinite;
-    }
-    
-    .terminal-text {
-      text-shadow: 0 0 10px currentColor;
-    }
-    
-    .glow-border {
-      border: 1px solid rgba(0, 255, 136, 0.5);
-      box-shadow: 0 0 10px rgba(0, 255, 136, 0.3), inset 0 0 10px rgba(0, 255, 136, 0.1);
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: float 3s ease-in-out infinite;
     }
     
     .command-output {
-      scrollbar-width: thin;
-      scrollbar-color: rgba(0, 255, 136, 0.5) rgba(0, 0, 0, 0.3);
+      font-family: 'JetBrains Mono', monospace;
     }
     
-    .command-output::-webkit-scrollbar {
-      width: 6px;
+    ::-webkit-scrollbar {
+      width: 8px;
     }
     
-    .command-output::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.3);
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 20, 40, 0.8);
     }
     
-    .command-output::-webkit-scrollbar-thumb {
-      background: rgba(0, 255, 136, 0.5);
-      border-radius: 3px;
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #00ff88, #00d4ff);
+      border-radius: 4px;
     }
     
-    .nebula {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.3;
+    .hologram-effect {
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+      backdrop-filter: blur(10px);
     }
   </style>
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full m-0 p-0 overflow-hidden" style="background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a1a2e 100%);"><!-- Nebula Effects -->
-  <div class="nebula" style="width: 400px; height: 400px; background: radial-gradient(circle, #4a00e0 0%, transparent 70%); top: -100px; left: -100px;"></div>
-  <div class="nebula" style="width: 300px; height: 300px; background: radial-gradient(circle, #00d4aa 0%, transparent 70%); bottom: -50px; right: -50px;"></div>
-  <div class="nebula" style="width: 250px; height: 250px; background: radial-gradient(circle, #ff006e 0%, transparent 70%); top: 50%; right: 10%;"></div><!-- Star Field -->
-  <div class="star-field" id="starField"></div><!-- Main Container -->
-  <main class="h-full w-full flex items-center justify-center p-4 md:p-8 relative z-10">
-   <div class="w-full max-w-4xl"><!-- Terminal Header -->
-    <header class="floating mb-4">
-     <div class="flex items-center justify-center gap-3 mb-2">
-      <svg width="40" height="40" viewbox="0 0 40 40" class="text-emerald-400"><polygon points="20,2 38,20 20,38 2,20" fill="none" stroke="currentColor" stroke-width="2" /> <circle cx="20" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2" /> <circle cx="20" cy="20" r="3" fill="currentColor" />
-      </svg>
-      <h1 id="terminalTitle" class="text-2xl md:text-4xl font-bold tracking-wider terminal-text" style="font-family: 'Orbitron', sans-serif; color: #00ff88;">STAR TECH TERMINAL</h1>
-      <svg width="40" height="40" viewbox="0 0 40 40" class="text-emerald-400"><polygon points="20,2 38,20 20,38 2,20" fill="none" stroke="currentColor" stroke-width="2" /> <circle cx="20" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2" /> <circle cx="20" cy="20" r="3" fill="currentColor" />
-      </svg>
-     </div>
-     <p id="welcomeMessage" class="text-center text-sm tracking-widest" style="font-family: 'JetBrains Mono', monospace; color: #00d4aa;">★ GALACTIC COMMAND INTERFACE v3.7.2 ★</p>
-    </header><!-- Terminal Window -->
-    <div class="terminal-container relative rounded-lg overflow-hidden glow-border" style="background: rgba(0, 10, 20, 0.9);"><!-- Scan Line Effect -->
-     <div class="scan-line"></div><!-- Terminal Title Bar -->
-     <div class="flex items-center justify-between px-4 py-2 border-b" style="border-color: rgba(0, 255, 136, 0.3); background: rgba(0, 255, 136, 0.1);">
-      <div class="flex gap-2">
-       <div class="w-3 h-3 rounded-full bg-red-500"></div>
-       <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-       <div class="w-3 h-3 rounded-full bg-green-500"></div>
-      </div><span class="text-xs tracking-wider" style="font-family: 'JetBrains Mono', monospace; color: #00ff88;"> SECURE CONNECTION: SECTOR-7G </span>
-      <div class="flex items-center gap-2">
-       <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div><span class="text-xs" style="color: #00ff88;">ONLINE</span>
+ <body class="h-full bg-gray-950 text-green-400 overflow-hidden" style="font-family: 'JetBrains Mono', monospace;"><!-- Yıldız Arkaplanı -->
+  <div id="stars-container" class="fixed inset-0 overflow-hidden pointer-events-none"></div><!-- Ana Container -->
+  <div class="h-full w-full flex flex-col relative" style="background: radial-gradient(ellipse at center, #0a1628 0%, #000510 50%, #000000 100%);"><!-- Scanline Efekti -->
+   <div class="scanline"></div><!-- Üst Bar -->
+   <header class="relative z-20 border-b border-cyan-500/30 p-3 hologram-effect">
+    <div class="flex items-center justify-between max-w-7xl mx-auto">
+     <div class="flex items-center gap-4"><!-- Logo -->
+      <div class="relative">
+       <svg width="50" height="50" viewbox="0 0 100 100" class="drop-shadow-lg" style="filter: drop-shadow(0 0 10px #00ff88);"><polygon points="50,5 61,35 95,35 68,55 79,90 50,70 21,90 32,55 5,35 39,35" fill="none" stroke="url(#starGrad)" stroke-width="3" /> <circle cx="50" cy="50" r="15" fill="none" stroke="#00d4ff" stroke-width="2" /> <circle cx="50" cy="50" r="8" fill="#00ff88" /> <defs>
+         <lineargradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#00ff88" />
+          <stop offset="100%" style="stop-color:#00d4ff" />
+         </lineargradient>
+        </defs>
+       </svg>
       </div>
-     </div><!-- Terminal Output Area -->
-     <div id="terminalOutput" class="command-output p-4 h-64 md:h-80 overflow-y-auto" style="font-family: 'JetBrains Mono', monospace;"><!-- Output will be rendered here -->
-     </div><!-- Command Input Area -->
-     <div class="flex items-center px-4 py-3 border-t" style="border-color: rgba(0, 255, 136, 0.3); background: rgba(0, 255, 136, 0.05);"><span class="mr-2 terminal-text" style="color: #00ff88;">❯</span> <span class="mr-2 text-cyan-400 terminal-text">startech@galaxy</span> <span class="mr-2" style="color: #ff006e;">~</span> <span class="mr-2" style="color: #00ff88;">$</span> <input type="text" id="commandInput" class="flex-1 bg-transparent outline-none terminal-text" style="font-family: 'JetBrains Mono', monospace; color: #00ff88; caret-color: #00ff88;" placeholder="enter command..." autocomplete="off"> <span class="cursor-blink terminal-text" style="color: #00ff88;">▊</span>
+      <div>
+       <h1 id="terminal-title" class="text-xl font-bold tracking-wider" style="font-family: 'Orbitron', sans-serif; background: linear-gradient(90deg, #00ff88, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">STAR-TECH COMMAND CENTER</h1>
+       <p class="text-xs text-cyan-400/70">GALACTIC DOMINANCE SYSTEM v3.7.2</p>
+      </div>
+     </div><!-- Durum Göstergeleri -->
+     <div class="flex items-center gap-6">
+      <div class="flex flex-col items-center"><span class="text-xs text-cyan-400/70">SİSTEM</span>
+       <div class="flex items-center gap-1">
+        <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div><span class="text-green-400 text-sm font-bold">ONLINE</span>
+       </div>
+      </div>
+      <div class="flex flex-col items-center"><span class="text-xs text-cyan-400/70">GÜÇ</span> <span class="text-cyan-400 text-sm font-bold" id="power-level">100%</span>
+      </div>
+      <div class="flex flex-col items-center"><span class="text-xs text-cyan-400/70">BAĞLANTI</span> <span class="text-purple-400 text-sm font-bold">QUANTUM</span>
+      </div>
      </div>
-    </div><!-- Status Bar -->
-    <footer class="mt-4 flex flex-wrap justify-center gap-4 md:gap-8 text-xs" style="font-family: 'JetBrains Mono', monospace;">
-     <div class="flex items-center gap-2" style="color: #00d4aa;">
-      <svg width="16" height="16" viewbox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5" /> <path d="M8 4v4l3 2" stroke="currentColor" stroke-width="1.5" fill="none" />
-      </svg><span id="timeDisplay">00:00:00</span>
+    </div>
+   </header><!-- Ana Terminal Alanı -->
+   <main class="flex-1 flex gap-4 p-4 min-h-0 relative z-10"><!-- Sol Panel - Hızlı Komutlar -->
+    <aside class="w-64 flex-shrink-0 flex flex-col gap-3"><!-- Hızlı Komut Butonları -->
+     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3 terminal-glow">
+      <h3 class="text-cyan-400 text-xs font-bold mb-3 tracking-widest" style="font-family: 'Orbitron', sans-serif;">⚡ HIZLI KOMUTLAR</h3>
+      <div class="grid grid-cols-2 gap-2"><button onclick="executeQuickCommand('scan')" class="p-2 rounded bg-gradient-to-br from-green-900/50 to-green-800/30 border border-green-500/30 hover:border-green-400 hover:shadow-lg hover:shadow-green-500/20 transition-all text-xs text-green-400 hover:text-green-300"> 🛸 TARA </button> <button onclick="executeQuickCommand('attack')" class="p-2 rounded bg-gradient-to-br from-red-900/50 to-red-800/30 border border-red-500/30 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/20 transition-all text-xs text-red-400 hover:text-red-300"> ⚔️ SALDIRI </button> <button onclick="executeQuickCommand('defend')" class="p-2 rounded bg-gradient-to-br from-blue-900/50 to-blue-800/30 border border-blue-500/30 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 transition-all text-xs text-blue-400 hover:text-blue-300"> 🛡️ SAVUN </button> <button onclick="executeQuickCommand('cloak')" class="p-2 rounded bg-gradient-to-br from-purple-900/50 to-purple-800/30 border border-purple-500/30 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 transition-all text-xs text-purple-400 hover:text-purple-300"> 👻 GİZLEN </button> <button onclick="executeQuickCommand('warp')" class="p-2 rounded bg-gradient-to-br from-cyan-900/50 to-cyan-800/30 border border-cyan-500/30 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 transition-all text-xs text-cyan-400 hover:text-cyan-300"> 🌀 WARP </button> <button onclick="executeQuickCommand('hack')" class="p-2 rounded bg-gradient-to-br from-yellow-900/50 to-yellow-800/30 border border-yellow-500/30 hover:border-yellow-400 hover:shadow-lg hover:shadow-yellow-500/20 transition-all text-xs text-yellow-400 hover:text-yellow-300"> 💻 HACK </button> <button onclick="executeQuickCommand('dominate')" class="col-span-2 p-3 rounded bg-gradient-to-br from-pink-900/50 to-purple-800/30 border border-pink-500/30 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-500/30 transition-all text-sm text-pink-400 hover:text-pink-300 font-bold"> 👑 HAKİMİYET KUR </button>
+      </div>
+     </div><!-- Filo Durumu -->
+     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3 flex-1">
+      <h3 class="text-cyan-400 text-xs font-bold mb-3 tracking-widest" style="font-family: 'Orbitron', sans-serif;">🚀 FİLO DURUMU</h3>
+      <div class="space-y-2">
+       <div class="flex justify-between items-center text-xs"><span class="text-gray-400">Savaş Gemileri</span> <span class="text-green-400 font-mono">247</span>
+       </div>
+       <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full" style="width: 85%"></div>
+       </div>
+       <div class="flex justify-between items-center text-xs mt-2"><span class="text-gray-400">Keşif Botları</span> <span class="text-cyan-400 font-mono">1,892</span>
+       </div>
+       <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full" style="width: 92%"></div>
+       </div>
+       <div class="flex justify-between items-center text-xs mt-2"><span class="text-gray-400">Enerji Kalkanı</span> <span class="text-purple-400 font-mono">AKTIF</span>
+       </div>
+       <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-purple-500 to-pink-400 rounded-full animate-pulse" style="width: 100%"></div>
+       </div>
+      </div>
      </div>
-     <div class="flex items-center gap-2" style="color: #4a90e2;">
-      <svg width="16" height="16" viewbox="0 0 16 16" fill="currentColor"><rect x="2" y="6" width="12" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.5" /> <rect x="4" y="8" width="7" height="2" fill="currentColor" /> <rect x="14" y="8" width="1" height="2" fill="currentColor" />
-      </svg><span>POWER: 98%</span>
+    </aside><!-- Merkez - Terminal -->
+    <section class="flex-1 flex flex-col min-w-0">
+     <div class="hologram-effect rounded-lg border border-green-500/30 flex-1 flex flex-col terminal-glow overflow-hidden"><!-- Terminal Başlığı -->
+      <div class="flex items-center justify-between px-4 py-2 border-b border-green-500/20 bg-black/30">
+       <div class="flex items-center gap-2">
+        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+       </div><span class="text-green-400/70 text-xs font-mono">STAR-TERMINAL :: root@galaxy-hq</span> <button onclick="clearTerminal()" class="text-xs text-gray-500 hover:text-red-400 transition-colors">TEMİZLE</button>
+      </div><!-- Terminal Çıktısı -->
+      <div id="terminal-output" class="flex-1 overflow-y-auto p-4 font-mono text-sm command-output space-y-1"><!-- Çıktılar buraya gelecek -->
+      </div><!-- Komut Girişi -->
+      <div class="border-t border-green-500/20 p-3 bg-black/40">
+       <div class="flex items-center gap-2"><span class="text-cyan-400 font-bold">root@galaxy-hq:~$</span> <input type="text" id="command-input" class="flex-1 bg-transparent border-none outline-none text-green-400 font-mono placeholder-green-700" placeholder="Komut girin... (yardım için 'help' yazın)" autocomplete="off" spellcheck="false"> <span class="text-green-400 cursor-blink">█</span>
+       </div>
+      </div>
      </div>
-     <div class="flex items-center gap-2" style="color: #ff006e;">
-      <svg width="16" height="16" viewbox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5" /> <circle cx="8" cy="8" r="2" fill="currentColor" />
-      </svg><span>SIGNAL: STRONG</span>
+    </section><!-- Sağ Panel - Radar & Hedefler -->
+    <aside class="w-72 flex-shrink-0 flex flex-col gap-3"><!-- Radar -->
+     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3 aspect-square relative overflow-hidden">
+      <h3 class="text-cyan-400 text-xs font-bold mb-2 tracking-widest" style="font-family: 'Orbitron', sans-serif;">📡 GALAKTIK RADAR</h3>
+      <div class="relative w-full h-48" id="radar-container">
+       <svg viewbox="0 0 200 200" class="w-full h-full"><!-- Radar Çemberleri --> <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(0, 255, 136, 0.2)" stroke-width="1" /> <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(0, 255, 136, 0.15)" stroke-width="1" /> <circle cx="100" cy="100" r="30" fill="none" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" /> <!-- Radar Çizgileri --> <line x1="100" y1="10" x2="100" y2="190" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" /> <line x1="10" y1="100" x2="190" y2="100" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" /> <!-- Merkez --> <circle cx="100" cy="100" r="5" fill="#00ff88">
+         <animate attributename="r" values="3;6;3" dur="1s" repeatcount="indefinite" />
+        </circle> <!-- Radar Sweep --> <g id="radar-sweep">
+         <line x1="100" y1="100" x2="100" y2="10" stroke="url(#sweepGrad)" stroke-width="2">
+          <animatetransform attributename="transform" type="rotate" from="0 100 100" to="360 100 100" dur="3s" repeatcount="indefinite" />
+         </line>
+         <defs>
+          <lineargradient id="sweepGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+           <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.8" />
+           <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0" />
+          </lineargradient>
+         </defs>
+        </g> <!-- Hedefler --> <g id="radar-targets"></g>
+       </svg>
+      </div>
+     </div><!-- Tespit Edilen Hedefler -->
+     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3 flex-1 overflow-hidden">
+      <h3 class="text-cyan-400 text-xs font-bold mb-2 tracking-widest" style="font-family: 'Orbitron', sans-serif;">🎯 HEDEFLER</h3>
+      <div id="target-list" class="space-y-2 overflow-y-auto max-h-48 text-xs"><!-- Hedefler buraya -->
+      </div>
+     </div><!-- Sistem Logları -->
+     <div class="hologram-effect rounded-lg border border-cyan-500/30 p-3">
+      <h3 class="text-cyan-400 text-xs font-bold mb-2 tracking-widest" style="font-family: 'Orbitron', sans-serif;">📋 SİSTEM LOGLARI</h3>
+      <div id="system-logs" class="space-y-1 text-xs font-mono max-h-24 overflow-y-auto"><!-- Loglar buraya -->
+      </div>
      </div>
-     <div class="flex items-center gap-2" style="color: #ffd700;"><span>★ COORDINATES: 47.3°N, 122.5°W</span>
+    </aside>
+   </main><!-- Alt Bar -->
+   <footer class="relative z-20 border-t border-cyan-500/30 px-4 py-2 hologram-effect">
+    <div class="flex items-center justify-between text-xs">
+     <div class="flex items-center gap-4"><span class="text-gray-500">SEKTÖR: <span class="text-cyan-400">ALPHA-7</span></span> <span class="text-gray-500">KOORDİNAT: <span class="text-green-400" id="coordinates">X:247.3 Y:891.2 Z:42.8</span></span>
      </div>
-    </footer>
-   </div>
-  </main>
+     <div class="flex items-center gap-4"><span class="text-gray-500">STAR-TIME: <span class="text-purple-400" id="star-time">--:--:--</span></span> <span id="welcome-message" class="text-cyan-400/70">Uzay Hakimiyet Sistemine Hoşgeldiniz</span>
+     </div>
+    </div>
+   </footer>
+  </div>
   <script>
+    // Default Config
     const defaultConfig = {
-      terminal_title: 'STAR TECH TERMINAL',
-      welcome_message: '★ GALACTIC COMMAND INTERFACE v3.7.2 ★',
-      background_color: '#0a0a1a',
-      terminal_bg_color: '#000a14',
+      terminal_title: 'STAR-TECH COMMAND CENTER',
+      welcome_message: 'Uzay Hakimiyet Sistemine Hoşgeldiniz',
+      primary_color: '#00ff88',
+      secondary_color: '#00d4ff',
+      background_color: '#000510',
       text_color: '#00ff88',
-      accent_color: '#00d4aa',
-      highlight_color: '#ff006e'
+      accent_color: '#ff00aa',
+      font_family: 'JetBrains Mono'
     };
 
     let config = { ...defaultConfig };
-    
-    const terminalHistory = [];
-    let historyIndex = -1;
 
+    // Element SDK Initialization
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+            },
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (v) => { cfg.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => cfg.font_family || defaultConfig.font_family,
+            set: (v) => { cfg.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['terminal_title', cfg.terminal_title || defaultConfig.terminal_title],
+          ['welcome_message', cfg.welcome_message || defaultConfig.welcome_message]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const titleEl = document.getElementById('terminal-title');
+      const welcomeEl = document.getElementById('welcome-message');
+      
+      if (titleEl) titleEl.textContent = config.terminal_title || defaultConfig.terminal_title;
+      if (welcomeEl) welcomeEl.textContent = config.welcome_message || defaultConfig.welcome_message;
+      
+      document.body.style.fontFamily = `${config.font_family || defaultConfig.font_family}, monospace`;
+    }
+
+    // Komut Sistemi
     const commands = {
       help: () => ({
         type: 'info',
         content: `
 ╔══════════════════════════════════════════════════════════════╗
-║                    AVAILABLE COMMANDS                        ║
+║                    STAR-TECH KOMUT REHBERİ                    ║
 ╠══════════════════════════════════════════════════════════════╣
-║  help      - Display this help menu                          ║
-║  status    - Show system status                              ║
-║  scan      - Scan nearby sectors                             ║
-║  navigate  - Navigation controls                             ║
-║  comms     - Communication systems                           ║
-║  shields   - Shield status                                   ║
-║  weapons   - Weapons array status                            ║
-║  crew      - Crew manifest                                   ║
-║  mission   - Current mission briefing                        ║
-║  clear     - Clear terminal                                  ║
-║  date      - Show stardate                                   ║
-║  matrix    - Enter the matrix                                ║
+║  scan [hedef]      - Galaktik tarama başlat                  ║
+║  attack [hedef]    - Saldırı emri ver                        ║
+║  defend            - Savunma sistemlerini aktifle            ║
+║  cloak             - Gizlenme modunu aç/kapat                ║
+║  warp [koordinat]  - Warp sıçraması yap                      ║
+║  hack [sistem]     - Hedef sistemi hackle                    ║
+║  dominate          - Tam hakimiyet protokolü                 ║
+║  status            - Gemi durumunu göster                    ║
+║  fleet             - Filo bilgilerini listele                ║
+║  map               - Galaktik haritayı göster                ║
+║  resources         - Kaynak durumunu kontrol et              ║
+║  upgrade [sistem]  - Sistem yükseltmesi yap                  ║
+║  mission           - Aktif görevleri listele                 ║
+║  clear             - Terminal ekranını temizle               ║
+║  matrix            - Matrix modunu aktifle                   ║
+║  quantum           - Quantum hesaplama başlat                ║
 ╚══════════════════════════════════════════════════════════════╝`
       }),
       
+      scan: (args) => {
+        const target = args[0] || 'tüm sektör';
+        addRadarTarget();
+        return {
+          type: 'success',
+          content: `
+🛸 TARAMA BAŞLATILDI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Hedef: ${target.toUpperCase()}
+Tarama yarıçapı: 500 ışık yılı
+Algılanan anomaliler: ${Math.floor(Math.random() * 10) + 1}
+Tespit edilen gemiler: ${Math.floor(Math.random() * 50) + 5}
+Potansiyel tehditler: ${Math.floor(Math.random() * 5)}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Tarama tamamlandı. Radar güncellendi.`
+        };
+      },
+      
+      attack: (args) => {
+        const target = args[0] || 'belirsiz hedef';
+        addSystemLog('⚔️ Saldırı emri verildi', 'danger');
+        return {
+          type: 'danger',
+          content: `
+⚔️ SALDIRI PROTOKOLÜ AKTİF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Hedef: ${target.toUpperCase()}
+Silah sistemleri: ONLINE
+Lazer bataryaları: ŞARJ EDİLİYOR
+Füze yuvaları: HAZIR
+Kalkan delici: AKTİF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 Ateş etmeye hazır! 'fire' ile onaylayın.`
+        };
+      },
+      
+      defend: () => {
+        addSystemLog('🛡️ Savunma kalkanları aktif', 'info');
+        return {
+          type: 'info',
+          content: `
+🛡️ SAVUNMA SİSTEMLERİ AKTİFLEŞTİRİLDİ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Enerji kalkanı: ████████████ 100%
+Nokta savunma: ONLINE
+ECM sistemleri: AKTİF
+Otomatik müdahale: AÇIK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Gemi tam savunma modunda.`
+        };
+      },
+      
+      cloak: () => {
+        addSystemLog('👻 Gizlenme modu değiştirildi', 'warning');
+        return {
+          type: 'warning',
+          content: `
+👻 GİZLENME MODU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Durum: AKTİFLEŞTİRİLİYOR...
+Görünmezlik alanı: GENİŞLETİLİYOR
+Termal imza: MASKELEME
+EM yayılımı: BASTIRILIYOR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Gemi artık radardan görünmüyor!`
+        };
+      },
+      
+      warp: (args) => {
+        const coord = args[0] || 'rastgele';
+        updateCoordinates();
+        addSystemLog('🌀 Warp sıçraması tamamlandı', 'success');
+        return {
+          type: 'success',
+          content: `
+🌀 WARP SIÇRAMASI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Hedef koordinat: ${coord.toUpperCase()}
+Warp motoru: ŞARJ EDİLİYOR...
+████████████ 100%
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ SIÇRAMA BAŞARILI!
+Yeni konum: SEKTÖR-${String.fromCharCode(65 + Math.floor(Math.random() * 26))}-${Math.floor(Math.random() * 99)}`
+        };
+      },
+      
+      hack: (args) => {
+        const system = args[0] || 'hedef sistem';
+        addSystemLog('💻 Hack girişimi başladı', 'warning');
+        return {
+          type: 'warning',
+          content: `
+💻 HACKING PROTOKOLÜ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Hedef: ${system.toUpperCase()}
+Bağlantı kuruluyor... ✓
+Güvenlik duvarı atlanıyor... ✓
+Şifre kırılıyor... ████████░░ 80%
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚡ ERİŞİM SAĞLANDI!
+Veri indirme başladı...`
+        };
+      },
+      
+      dominate: () => {
+        addSystemLog('👑 HAKİMİYET PROTOKOLÜ AKTİF!', 'danger');
+        return {
+          type: 'special',
+          content: `
+👑 ████████████████████████████████████████████ 👑
+██                                            ██
+██      G A L A K T İ K   H A K İ M İ Y E T   ██
+██          P R O T O K O L Ü   A K T İ F     ██
+██                                            ██
+👑 ████████████████████████████████████████████ 👑
+
+   🌟 TÜM SİSTEMLER MAKSİMUM GÜÇTE 🌟
+   
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ⚡ Silahlar         : OVERCHARGE
+   🛡️ Kalkanlar       : IMPENETRABLE
+   🚀 Motorlar         : SUPERLUMINAL
+   💻 AI               : UNLIMITED
+   👁️ Sensörler       : OMNISCIENT
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   
+   ⚠️ DİKKAT: Yıldız sistemleri kontrol altına
+   alınıyor. Tüm düşman filoları teslim olmak
+   zorunda!
+   
+   ✓ HAKİMİYET KURULDU - EVREN SİZİN!`
+        };
+      },
+      
       status: () => ({
-        type: 'success',
-        content: `
-┌─────────────────────────────────────┐
-│      SYSTEM STATUS REPORT           │
-├─────────────────────────────────────┤
-│  Hull Integrity:    ████████░░ 87%  │
-│  Shield Power:      █████████░ 94%  │
-│  Engine Output:     ████████░░ 82%  │
-│  Life Support:      ██████████ 100% │
-│  Weapons Systems:   ████████░░ 85%  │
-│  Fuel Reserves:     ███████░░░ 71%  │
-├─────────────────────────────────────┤
-│  STATUS: ALL SYSTEMS OPERATIONAL    │
-└─────────────────────────────────────┘`
-      }),
-      
-      scan: () => ({
-        type: 'warning',
-        content: `
-[SCANNING SECTOR 7G...]
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 100%
-
-SCAN RESULTS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-★ CELESTIAL BODIES DETECTED: 47
-  • Planets: 12
-  • Moons: 23
-  • Asteroids: 8
-  • Space Stations: 4
-
-⚠ ANOMALIES DETECTED: 2
-  • Quantum Fluctuation at 127.3°
-  • Unknown Energy Signature at 89.7°
-
-▲ POTENTIAL THREATS: 1
-  • Unidentified Vessel - Distance: 2.3 LY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
-      }),
-      
-      navigate: () => ({
         type: 'info',
         content: `
-    ╔═══════════════════════════════╗
-    ║     NAVIGATION COMPUTER       ║
-    ╠═══════════════════════════════╣
-    ║                               ║
-    ║         ★  CURRENT           ║
-    ║           POSITION            ║
-    ║              ↓                ║
-    ║    ·  ·  ·  ◉  ·  ·  ·       ║
-    ║    ·  ★  ·  ·  ·  ☆  ·       ║
-    ║    ·  ·  ·  ·  ★  ·  ·       ║
-    ║                               ║
-    ║  HEADING: 127.3° MARK 45     ║
-    ║  SPEED: WARP 6.5             ║
-    ║  ETA: 3.7 STANDARD HOURS     ║
-    ╚═══════════════════════════════╝`
+📊 GEMİ DURUM RAPORU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gövde Bütünlüğü   : ████████░░ 85%
+Kalkan Enerjisi   : ██████████ 100%
+Yakıt Seviyesi    : ███████░░░ 72%
+Mürettebat Morali : █████████░ 95%
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Aktif Sistemler: 47/50
+Kritik Uyarılar: 0
+Son Bakım: 3 yıldız-günü önce`
       }),
       
-      comms: () => ({
-        type: 'success',
-        content: `
-╭───────────────────────────────────╮
-│    COMMUNICATION SYSTEMS          │
-├───────────────────────────────────┤
-│  ✓ Subspace Radio:     ONLINE    │
-│  ✓ Emergency Beacon:   STANDBY   │
-│  ✓ Long Range Comm:    ONLINE    │
-│  ✓ Translator Matrix:  ACTIVE    │
-├───────────────────────────────────┤
-│  INCOMING MESSAGES: 3            │
-│  OUTGOING QUEUE: 0               │
-│  ENCRYPTED CHANNELS: SECURE      │
-╰───────────────────────────────────╯`
-      }),
-      
-      shields: () => ({
+      fleet: () => ({
         type: 'info',
         content: `
-╔═══════════════════════════════════╗
-║         SHIELD ARRAY              ║
-╠═══════════════════════════════════╣
-║                                   ║
-║     FORWARD: ████████░░ 85%      ║
-║        AFT: █████████░ 92%       ║
-║       PORT: ████████░░ 88%       ║
-║  STARBOARD: █████████░ 94%       ║
-║                                   ║
-║     ┌─────────────┐              ║
-║     │   ▲ 85%    │              ║
-║     │ ◄───►      │              ║
-║     │88%│94%│    │              ║
-║     │   ▼ 92%    │              ║
-║     └─────────────┘              ║
-║                                   ║
-║  SHIELD HARMONICS: STABLE        ║
-╚═══════════════════════════════════╝`
+🚀 FİLO ENVANTERİ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SAVAŞ GEMİLERİ
+├─ Dreadnought     : 3
+├─ Kruvazör        : 18
+├─ Destroyer       : 45
+└─ Fırkateyn       : 181
+
+DESTEK GEMİLERİ
+├─ Taşıyıcı        : 12
+├─ Tanker          : 24
+└─ Hastane Gemisi  : 6
+
+KEŞİF ARAÇLARI
+├─ Probe           : 1,892
+└─ Stealth Scout   : 87
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Toplam: 2,268 birim`
       }),
       
-      weapons: () => ({
-        type: 'danger',
+      matrix: () => {
+        startMatrixEffect();
+        return {
+          type: 'success',
+          content: `
+💊 MATRİX MODU AKTİF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"Free your mind..."
+Simülasyon katmanı aşılıyor...
+Gerçeklik algısı yeniden yapılandırılıyor...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Artık gerçeği görebilirsiniz.`
+        };
+      },
+      
+      quantum: () => ({
+        type: 'special',
         content: `
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃      WEAPONS ARRAY STATUS      ┃
-┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃                                ┃
-┃  PHASER BANKS                  ┃
-┃    Bank 1: ████████░░ READY   ┃
-┃    Bank 2: █████████░ READY   ┃
-┃    Bank 3: ████████░░ READY   ┃
-┃                                ┃
-┃  PHOTON TORPEDOES              ┃
-┃    Loaded: 24/30               ┃
-┃    Status: ARMED               ┃
-┃                                ┃
-┃  TARGETING COMPUTER: ONLINE    ┃
-┃  LOCK STATUS: DISENGAGED       ┃
-┃                                ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`
+⚛️ QUANTUM HESAPLAMA BAŞLATILDI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Qubit sayısı: 4,096
+Süperpozisyon: STABIL
+Dolanıklık: AKTİF
+Dekoherans süresi: 847μs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔮 Tüm olasılıklar eşzamanlı hesaplanıyor...
+Sonuç: SONSUZ POTANSİYEL`
       }),
       
-      crew: () => ({
+      resources: () => ({
         type: 'info',
         content: `
-╔════════════════════════════════════╗
-║          CREW MANIFEST             ║
-╠════════════════════════════════════╣
-║  TOTAL PERSONNEL: 127              ║
-├────────────────────────────────────┤
-║  ◉ Command Staff:     8            ║
-║  ◉ Bridge Crew:       12           ║
-║  ◉ Engineering:       34           ║
-║  ◉ Science Division:  28           ║
-║  ◉ Medical Staff:     15           ║
-║  ◉ Security:          22           ║
-║  ◉ Support Services:  8            ║
-├────────────────────────────────────┤
-║  ON DUTY:    78  │  OFF DUTY:  49  ║
-║  MEDICAL BAY: 3  │  DETAINED:   0  ║
-╚════════════════════════════════════╝`
+💎 KAYNAK DURUMU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Enerji Kristali  : 12,847 ton
+Titanium Alaşım  : 8,234 ton
+Quantum Yakıt    : 3,421 litre
+Nadir Element    : 847 kg
+Karanlık Madde   : 12.3 μg
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Toplam Değer: 2.4 Trilyon Kredi`
       }),
       
       mission: () => ({
         type: 'warning',
         content: `
-╔══════════════════════════════════════════╗
-║           MISSION BRIEFING               ║
-║          [CLASSIFIED LEVEL 3]            ║
-╠══════════════════════════════════════════╣
-║                                          ║
-║  OPERATION: STELLAR HORIZON              ║
-║  OBJECTIVE: Deep Space Reconnaissance    ║
-║                                          ║
-║  PRIMARY GOALS:                          ║
-║  1. Map uncharted regions of Sector 7G   ║
-║  2. Investigate anomalous readings       ║
-║  3. Establish contact with Station Omega ║
-║  4. Report findings to Command           ║
-║                                          ║
-║  MISSION TIME: 47:23:15                  ║
-║  STATUS: IN PROGRESS                     ║
-║  THREAT LEVEL: MODERATE                  ║
-║                                          ║
-╚══════════════════════════════════════════╝`
+📋 AKTİF GÖREVLER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[!] ÖNCELİKLİ: Andromeda Kapısını Koru
+    İlerleme: ██████░░░░ 60%
+    
+[2] Keşif: Nebula-X Haritalaması
+    İlerleme: ████████░░ 82%
+    
+[3] Diplomatik: Zortan Konseyi Görüşmesi
+    Kalan Süre: 4 yıldız-saati
+    
+[4] Kaynak: Asteroid Madenciliği
+    İlerleme: █████░░░░░ 45%
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
       }),
       
-      date: () => {
-        const now = new Date();
-        const stardate = (now.getFullYear() - 2000) * 1000 + 
-                        Math.floor((now.getMonth() * 30 + now.getDate()) / 0.365);
-        return {
-          type: 'info',
-          content: `
-╭─────────────────────────────────╮
-│       TEMPORAL REFERENCE        │
-├─────────────────────────────────┤
-│  STARDATE: ${stardate.toFixed(1)}           │
-│  EARTH DATE: ${now.toLocaleDateString()}      │
-│  SHIP TIME: ${now.toLocaleTimeString()}        │
-│  GALACTIC STANDARD: ${Math.floor(Math.random() * 1000)}.${Math.floor(Math.random() * 100)}      │
-╰─────────────────────────────────╯`
-        };
-      },
-      
-      matrix: () => ({
-        type: 'matrix',
+      map: () => ({
+        type: 'info',
         content: `
-Wake up, Neo...
-The Matrix has you...
-Follow the white rabbit.
-Knock, knock, Neo.
-
-01001000 01000101 01001100 01001100 01001111
-▓▒░ DECRYPTING REALITY ░▒▓
-████████████████████████████
-
-There is no spoon.`
+🗺️ GALAKTİK HARİTA - SEKTÖR ALPHA-7
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     *        ·    ★    ·        *
+        ·   NEBULA-X    *    ·
+   *      ·    *    ·       ★
+      ·       [SİZ]      ·
+   ★     *   ·    *   ·      *
+        DÜŞMAN      ·    ★
+     ·    ÜSSÜ   ★      ·    *
+   *    ·     *     ·        ★
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Lejant: [SİZ]=Konum *=Yıldız ★=İstasyon`
       }),
       
-      clear: () => ({ type: 'clear', content: '' })
+      clear: () => {
+        setTimeout(() => {
+          document.getElementById('terminal-output').innerHTML = '';
+          addOutput('Terminal temizlendi. Yeni komut girmeye hazır.', 'info');
+        }, 100);
+        return null;
+      }
     };
 
-    function getOutputColor(type) {
+    // Terminal İşlevleri
+    const terminalOutput = document.getElementById('terminal-output');
+    const commandInput = document.getElementById('command-input');
+    let commandHistory = [];
+    let historyIndex = -1;
+
+    function addOutput(content, type = 'normal') {
+      const div = document.createElement('div');
+      div.className = 'whitespace-pre-wrap mb-2';
+      
       const colors = {
-        info: config.text_color || defaultConfig.text_color,
-        success: '#00ff88',
-        warning: '#ffd700',
-        danger: '#ff006e',
-        error: '#ff4444',
-        matrix: '#00ff00'
+        normal: 'text-green-400',
+        success: 'text-emerald-400',
+        danger: 'text-red-400',
+        warning: 'text-yellow-400',
+        info: 'text-cyan-400',
+        special: 'text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400'
       };
-      return colors[type] || config.text_color || defaultConfig.text_color;
+      
+      div.className += ` ${colors[type] || colors.normal}`;
+      div.textContent = content;
+      terminalOutput.appendChild(div);
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
     }
 
-    function addOutput(content, type = 'info') {
-      const output = document.getElementById('terminalOutput');
-      const line = document.createElement('div');
-      line.className = 'mb-2 whitespace-pre terminal-text';
-      line.style.color = getOutputColor(type);
-      line.textContent = content;
-      output.appendChild(line);
-      output.scrollTop = output.scrollHeight;
-    }
-
-    function processCommand(cmd) {
-      const trimmedCmd = cmd.trim().toLowerCase();
+    function processCommand(input) {
+      const parts = input.trim().toLowerCase().split(/\s+/);
+      const cmd = parts[0];
+      const args = parts.slice(1);
       
-      addOutput(`❯ ${cmd}`, 'info');
-      
-      if (trimmedCmd === '') return;
-      
-      terminalHistory.push(cmd);
-      historyIndex = terminalHistory.length;
-      
-      if (trimmedCmd === 'clear') {
-        document.getElementById('terminalOutput').innerHTML = '';
-        return;
+      // Komutu geçmişe ekle
+      if (input.trim()) {
+        commandHistory.unshift(input.trim());
+        if (commandHistory.length > 50) commandHistory.pop();
+        historyIndex = -1;
       }
       
-      const command = commands[trimmedCmd];
-      if (command) {
-        const result = command();
-        addOutput(result.content, result.type);
-      } else {
-        addOutput(`
-╔═══════════════════════════════════════════╗
-║  ERROR: Command '${trimmedCmd}' not recognized  
-║  Type 'help' for available commands       ║
-╚═══════════════════════════════════════════╝`, 'error');
-      }
-    }
-
-    function createStars() {
-      const starField = document.getElementById('starField');
-      starField.innerHTML = '';
-      const starCount = 150;
+      // Komutu göster
+      addOutput(`root@galaxy-hq:~$ ${input}`, 'normal');
       
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        const size = Math.random() * 3 + 1;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
-        star.style.setProperty('--min-opacity', `${Math.random() * 0.3 + 0.2}`);
-        star.style.animationDelay = `${Math.random() * 3}s`;
-        
-        const hue = Math.random() > 0.8 ? Math.random() * 60 + 180 : 0;
-        if (hue > 0) {
-          star.style.background = `hsl(${hue}, 100%, 80%)`;
+      if (cmd === '') return;
+      
+      if (commands[cmd]) {
+        const result = commands[cmd](args);
+        if (result) {
+          addOutput(result.content, result.type);
         }
-        
-        starField.appendChild(star);
+      } else {
+        addOutput(`Bilinmeyen komut: '${cmd}'. Yardım için 'help' yazın.`, 'danger');
       }
     }
 
-    function updateTime() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('timeDisplay').textContent = `${hours}:${minutes}:${seconds}`;
+    function executeQuickCommand(cmd) {
+      commandInput.value = cmd;
+      processCommand(cmd);
+      commandInput.value = '';
+      commandInput.focus();
     }
 
-    function initializeTerminal() {
-      addOutput(`
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║   ███████╗████████╗ █████╗ ██████╗     ████████╗███████╗    ║
-║   ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗    ╚══██╔══╝██╔════╝    ║
-║   ███████╗   ██║   ███████║██████╔╝       ██║   █████╗      ║
-║   ╚════██║   ██║   ██╔══██║██╔══██╗       ██║   ██╔══╝      ║
-║   ███████║   ██║   ██║  ██║██║  ██║       ██║   ███████╗    ║
-║   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝       ╚═╝   ╚══════╝    ║
-║                                                              ║
-║            SPACE TECHNOLOGY COMMAND INTERFACE                ║
-║                    Version 3.7.2                             ║
-╠══════════════════════════════════════════════════════════════╣
-║  Welcome, Commander. All systems are operational.            ║
-║  Type 'help' for a list of available commands.               ║
-╚══════════════════════════════════════════════════════════════╝
-      `, 'success');
+    function clearTerminal() {
+      terminalOutput.innerHTML = '';
+      addOutput('Terminal temizlendi.', 'info');
     }
 
-    async function onConfigChange(cfg) {
-      const terminalTitle = document.getElementById('terminalTitle');
-      const welcomeMessage = document.getElementById('welcomeMessage');
-      
-      if (terminalTitle) {
-        terminalTitle.textContent = cfg.terminal_title || defaultConfig.terminal_title;
-        terminalTitle.style.color = cfg.text_color || defaultConfig.text_color;
-      }
-      
-      if (welcomeMessage) {
-        welcomeMessage.textContent = cfg.welcome_message || defaultConfig.welcome_message;
-        welcomeMessage.style.color = cfg.accent_color || defaultConfig.accent_color;
-      }
-
-      document.body.style.background = `linear-gradient(135deg, ${cfg.background_color || defaultConfig.background_color} 0%, #1a0a2e 50%, #0a1a2e 100%)`;
-    }
-
-    function mapToCapabilities(cfg) {
-      return {
-        recolorables: [
-          {
-            get: () => cfg.background_color || defaultConfig.background_color,
-            set: (value) => {
-              cfg.background_color = value;
-              window.elementSdk.setConfig({ background_color: value });
-            }
-          },
-          {
-            get: () => cfg.terminal_bg_color || defaultConfig.terminal_bg_color,
-            set: (value) => {
-              cfg.terminal_bg_color = value;
-              window.elementSdk.setConfig({ terminal_bg_color: value });
-            }
-          },
-          {
-            get: () => cfg.text_color || defaultConfig.text_color,
-            set: (value) => {
-              cfg.text_color = value;
-              window.elementSdk.setConfig({ text_color: value });
-            }
-          },
-          {
-            get: () => cfg.accent_color || defaultConfig.accent_color,
-            set: (value) => {
-              cfg.accent_color = value;
-              window.elementSdk.setConfig({ accent_color: value });
-            }
-          },
-          {
-            get: () => cfg.highlight_color || defaultConfig.highlight_color,
-            set: (value) => {
-              cfg.highlight_color = value;
-              window.elementSdk.setConfig({ highlight_color: value });
-            }
-          }
-        ],
-        borderables: [],
-        fontEditable: undefined,
-        fontSizeable: undefined
-      };
-    }
-
-    function mapToEditPanelValues(cfg) {
-      return new Map([
-        ['terminal_title', cfg.terminal_title || defaultConfig.terminal_title],
-        ['welcome_message', cfg.welcome_message || defaultConfig.welcome_message]
-      ]);
-    }
-
-    // Initialize
-    createStars();
-    updateTime();
-    setInterval(updateTime, 1000);
-    initializeTerminal();
-
-    // Event Listeners
-    const commandInput = document.getElementById('commandInput');
-    
+    // Olay Dinleyicileri
     commandInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         processCommand(commandInput.value);
         commandInput.value = '';
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        if (historyIndex > 0) {
-          historyIndex--;
-          commandInput.value = terminalHistory[historyIndex];
+        if (historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          commandInput.value = commandHistory[historyIndex];
         }
       } else if (e.key === 'ArrowDown') {
         e.preventDefault();
-        if (historyIndex < terminalHistory.length - 1) {
-          historyIndex++;
-          commandInput.value = terminalHistory[historyIndex];
-        } else {
-          historyIndex = terminalHistory.length;
+        if (historyIndex > 0) {
+          historyIndex--;
+          commandInput.value = commandHistory[historyIndex];
+        } else if (historyIndex === 0) {
+          historyIndex = -1;
           commandInput.value = '';
         }
       }
     });
 
-    // Focus input on click anywhere
-    document.addEventListener('click', () => commandInput.focus());
-
-    // Initialize SDK
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities,
-        mapToEditPanelValues
-      });
+    // Radar Hedefleri
+    let radarTargets = [];
+    
+    function addRadarTarget() {
+      const svg = document.querySelector('#radar-targets');
+      const x = 20 + Math.random() * 160;
+      const y = 20 + Math.random() * 160;
+      const isHostile = Math.random() > 0.5;
+      
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', x);
+      circle.setAttribute('cy', y);
+      circle.setAttribute('r', '4');
+      circle.setAttribute('fill', isHostile ? '#ff4444' : '#00ff88');
+      circle.innerHTML = `<animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/>`;
+      
+      svg.appendChild(circle);
+      
+      // Hedef listesine ekle
+      const targetList = document.getElementById('target-list');
+      const targetDiv = document.createElement('div');
+      targetDiv.className = `p-2 rounded ${isHostile ? 'bg-red-900/30 border border-red-500/30' : 'bg-green-900/30 border border-green-500/30'}`;
+      targetDiv.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="${isHostile ? 'text-red-400' : 'text-green-400'}">${isHostile ? '⚠️ DÜŞMAN' : '✓ DOST'}</span>
+          <span class="text-gray-500">${Math.floor(Math.random() * 500)}AU</span>
+        </div>
+        <div class="text-gray-400 text-xs mt-1">ID: ${Math.random().toString(36).substr(2, 8).toUpperCase()}</div>
+      `;
+      targetList.prepend(targetDiv);
+      
+      // Max 8 hedef göster
+      while (targetList.children.length > 8) {
+        targetList.lastChild.remove();
+      }
     }
+
+    // Sistem Logları
+    function addSystemLog(message, type = 'info') {
+      const logsContainer = document.getElementById('system-logs');
+      const time = new Date().toLocaleTimeString('tr-TR');
+      
+      const colors = {
+        info: 'text-cyan-400',
+        success: 'text-green-400',
+        warning: 'text-yellow-400',
+        danger: 'text-red-400'
+      };
+      
+      const logDiv = document.createElement('div');
+      logDiv.className = `${colors[type]} opacity-80`;
+      logDiv.textContent = `[${time}] ${message}`;
+      logsContainer.prepend(logDiv);
+      
+      while (logsContainer.children.length > 10) {
+        logsContainer.lastChild.remove();
+      }
+    }
+
+    // Koordinat Güncelleme
+    function updateCoordinates() {
+      const coordEl = document.getElementById('coordinates');
+      const x = (Math.random() * 999).toFixed(1);
+      const y = (Math.random() * 999).toFixed(1);
+      const z = (Math.random() * 99).toFixed(1);
+      coordEl.textContent = `X:${x} Y:${y} Z:${z}`;
+    }
+
+    // Yıldız Arkaplanı
+    function createStars() {
+      const container = document.getElementById('stars-container');
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = Math.random() * 2 + 1 + 'px';
+        star.style.height = star.style.width;
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.opacity = Math.random() * 0.8 + 0.2;
+        container.appendChild(star);
+      }
+    }
+
+    // Matrix Efekti
+    function startMatrixEffect() {
+      const output = document.getElementById('terminal-output');
+      const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+      let count = 0;
+      
+      const interval = setInterval(() => {
+        let line = '';
+        for (let i = 0; i < 60; i++) {
+          line += chars[Math.floor(Math.random() * chars.length)];
+        }
+        addOutput(line, 'success');
+        count++;
+        if (count > 15) {
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+
+    // Saat Güncelleme
+    function updateStarTime() {
+      const timeEl = document.getElementById('star-time');
+      const now = new Date();
+      const starHours = (now.getHours() * 1.5) % 24;
+      const starMinutes = (now.getMinutes() * 1.2) % 60;
+      const starSeconds = (now.getSeconds() * 1.8) % 60;
+      timeEl.textContent = `${String(Math.floor(starHours)).padStart(2, '0')}:${String(Math.floor(starMinutes)).padStart(2, '0')}:${String(Math.floor(starSeconds)).padStart(2, '0')}`;
+    }
+
+    // Başlangıç
+    function init() {
+      createStars();
+      applyConfig();
+      
+      // Karşılama mesajları
+      addOutput(`
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   ███████╗████████╗ █████╗ ██████╗ ████████╗███████╗ ██████╗██╗  ██╗   ║
+║   ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔════╝██║  ██║   ║
+║   ███████╗   ██║   ███████║██████╔╝   ██║   █████╗  ██║     ███████║   ║
+║   ╚════██║   ██║   ██╔══██║██╔══██╗   ██║   ██╔══╝  ██║     ██╔══██║   ║
+║   ███████║   ██║   ██║  ██║██║  ██║   ██║   ███████╗╚██████╗██║  ██║   ║
+║   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝   ║
+║                                                              ║
+║              🌟 SPACE COMMAND TERMINAL v3.7.2 🌟             ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝`, 'special');
+      
+      addOutput(`
+🚀 Sistem başlatılıyor...
+✓ Quantum çekirdek aktif
+✓ Silah sistemleri online
+✓ Kalkan jeneratörleri hazır
+✓ Warp motoru beklemede
+✓ AI asistanı yüklendi
+
+Yardım için 'help' yazın veya hızlı komut butonlarını kullanın.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`, 'success');
+      
+      // Başlangıç hedefleri
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => addRadarTarget(), i * 500);
+      }
+      
+      // Sistem logları
+      addSystemLog('🚀 Sistem başlatıldı', 'success');
+      addSystemLog('🛡️ Kalkanlar aktif', 'info');
+      addSystemLog('📡 Radar taraması başladı', 'info');
+      
+      // Periyodik güncellemeler
+      setInterval(updateStarTime, 1000);
+      setInterval(() => {
+        if (Math.random() > 0.7) {
+          addRadarTarget();
+        }
+      }, 5000);
+      
+      commandInput.focus();
+    }
+
+    init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cd9a932957fc6e8',t:'MTc3MTA0MTY1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cd9bd6247dfc6e8',t:'MTc3MTA0MjQ3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
 
 
